@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+.pattaya-regular {
+  font-family: "Pattaya", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.clip-box {
+  clip-path: path('M 0,0 L 85,0 A 10,10 0,0,1 85,50 L 110,20 A 10,10 0,0,0 220,20 L 251,50 A 10,10 0,0,1 240,0 L 400,0 L 320,400 L 0,400 L 0,0 Z');
+}
+
