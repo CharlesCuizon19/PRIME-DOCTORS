@@ -62,9 +62,9 @@ treatment',
         <div class="swiper">
             <div class="pt-10 lg:pt-24 swiper-wrapper">
                 @foreach ($services as $item)
-                    <a href="{{ route('service.show', $item->id) }}">
-                        <div
-                            class="transition duration-300 border border-black cursor-pointer swiper-slide max-h-fit hover:scale-105">
+                    <div
+                        class="w-full cursor-pointer hover:scale-105 transition duration-300 swiper-slide max-h-fit rounded-[3rem]">
+                        <a href="{{ route('service.show', $item->id) }}">
                             <div
                                 class="relative p-6 text-center clip-box bg-white rounded-[3rem] lg:w-[20rem]  lg:h-[25rem]">
                                 <div class="flex flex-col items-center justify-around h-auto mt-5 lg:h-full">
@@ -93,8 +93,8 @@ treatment',
                                     <img src="{{ asset($item->img) }}" alt="General Services" class="h-12 ">
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 @endforeach
             </div>
             <!-- Swiper Pagination -->

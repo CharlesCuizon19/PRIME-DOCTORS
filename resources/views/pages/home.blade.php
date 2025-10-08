@@ -74,37 +74,6 @@
                 },
             });
 
-            const doctorsSwiper = new Swiper('.doctors-swiper', {
-                loop: true,
-                slidesPerView: 1,
-                spaceBetween: 20,
-                breakpoints: {
-                    640: {
-                        slidesPerView: 2,
-                    },
-                    1024: {
-                        slidesPerView: 4,
-                    },
-                },
-                // Custom navigation will be handled via event listeners
-            });
-
-            document.addEventListener('DOMContentLoaded', function() {
-                const prevBtn = document.querySelector('.prev-btn');
-                const nextBtn = document.querySelector('.next-btn');
-
-                if (prevBtn) {
-                    prevBtn.addEventListener('click', function() {
-                        doctorsSwiper.slidePrev();
-                    });
-                }
-
-                if (nextBtn) {
-                    nextBtn.addEventListener('click', function() {
-                        doctorsSwiper.slideNext();
-                    });
-                }
-            });
 
             function toggleContent(containerId, contentId) {
                 const allContainers = document.querySelectorAll('[id^="faqContainer"]');
