@@ -75,8 +75,8 @@ treatment',
             <div class="container py-32 mx-auto">
                 <div class="grid grid-cols-1 gap-x-24 gap-y-24 lg:grid-cols-4">
                     @foreach ($services as $item)
-                        <div
-                            class="w-full cursor-pointer hover:scale-105 transition duration-300 swiper-slide max-h-fit rounded-[3rem] shadow-lg">
+                        <div class="w-full cursor-pointer hover:scale-105 transition duration-300 swiper-slide max-h-fit rounded-[3rem] shadow-lg"
+                            data-aos="zoom-in" data-aos-duration="1000">
                             <a href="{{ route('service.show', $item->id) }}">
                                 <div class="relative p-6 text-center clip-box bg-white rounded-[3rem] lg:h-[25rem]">
                                     <div class="flex flex-col items-center justify-around h-auto mt-5 lg:h-full">

@@ -135,7 +135,7 @@
                             </p>
 
                             <div class="flex items-start justify-start w-full cursor-pointer">
-                                <a id="searchDoctorBtn" href="#"
+                                <a href="{{ route('find-a-doctor.show') }}"
                                     class="flex items-center justify-center gap-5 py-1 pl-5 pr-1 text-white transition duration-300 bg-[#edb42f] rounded-full shadow hover:scale-105 w-fit">
                                     <div class="text-sm font-semibold">FIND A DOCTOR</div>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"

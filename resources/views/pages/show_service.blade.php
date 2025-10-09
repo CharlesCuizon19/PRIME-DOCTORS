@@ -5,7 +5,7 @@
 @section('content')
     <div class="flex flex-col">
         <x-banner title1="Our" title2="Services" img_path='assets/services-banner.png' page="Services /"
-            breadcrumb="{{ $service->title }}" />
+            breadcrumb="{!! $service->title !!}" />
         <div class="h-full py-20 bg-gray-100">
             <div class="container grid grid-cols-1 gap-8 px-4 py-12 mx-auto lg:px-8 lg:grid-cols-3">
 
@@ -69,18 +69,15 @@
                         <div class="p-6 text-lg text-white bg-blue-500 rounded-t-2xl ">Other Services</div>
                         <div class="p-6 bg-white shadow rounded-b-2xl">
                             <ul class="space-y-3 text-gray-700">
-                                <li class="flex items-center justify-between">
-                                    <span>Special Departments</span>
-                                    <span class="text-gray-500">›</span>
-                                </li>
-                                <li class="flex items-center justify-between">
-                                    <span>Emergency & Critical Care</span>
-                                    <span class="text-gray-500">›</span>
-                                </li>
-                                <li class="flex items-center justify-between">
-                                    <span>Maternal & Child Care</span>
-                                    <span class="text-gray-500">›</span>
-                                </li>
+                                @foreach ($services as $item)
+                                    <li>
+                                        <a href="{{ route('service.show', ['id' => $item->id]) }}"
+                                            class="flex items-center justify-between">
+                                            <span>{{ $item->title }}</span>
+                                            <span class="text-3xl text-gray-500">›</span>
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

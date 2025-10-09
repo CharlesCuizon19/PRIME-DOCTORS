@@ -11,7 +11,7 @@
             <div class="container grid items-start grid-cols-1 gap-10 mx-auto lg:grid-cols-2">
 
                 <!-- Left Form -->
-                <div class="h-full p-10 bg-white shadow rounded-2xl">
+                <div class="h-full p-10 bg-white shadow rounded-2xl" data-aos="zoom-in" data-aos-duration="1000">
                     <form class="flex flex-col justify-between h-full space-y-6">
 
                         <!-- Doctor Name -->
@@ -87,14 +87,15 @@
                 <!-- Right Content -->
                 <div class="space-y-6 full:text-left">
                     <div class="space-y-6">
-                        <h2 class="text-4xl font-bold text-blue-700 pattaya-regular">Find the Right Doctor for You</h2>
+                        <h2 class="text-4xl font-bold text-blue-700 pattaya-regular" data-aos="zoom-in"
+                            data-aos-duration="1000">Find the Right Doctor for You</h2>
                         <div class="pb-8 border-b-2 w-fit">
                             <img src="{{ asset('assets/findadoctor-img.png') }}" alt="Doctor with patient"
-                                class="shadow rounded-xl full:mx-0 h-auto w-[38rem]">
-                            <div></div>
+                                class="shadow rounded-xl full:mx-0 h-auto w-[38rem]" data-aos="zoom-in"
+                                data-aos-duration="1000">
                         </div>
                     </div>
-                    <p class="text-gray-600 w-[75%] top-3">
+                    <p class="text-gray-600 w-[75%] top-3" data-aos="zoom-in" data-aos-duration="1000">
                         Your health is our priority. Use our Find a Doctor tool to connect with
                         trusted specialists who meet your medical needs, preferences, and
                         language of care.

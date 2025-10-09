@@ -5,7 +5,7 @@
             'button-route' => '#',
         ],
         (object) [
-            'title' => 'Test Test Test Test',
+            'title' => 'Connecting People to Better Health',
             'button-route' => '#',
         ],
     ];
@@ -29,12 +29,14 @@
                     <!-- Text Overlay -->
                     <div
                         class="container absolute inset-0 flex flex-col justify-center gap-2 px-4 mx-auto text-white lg:gap-7 text-start">
-                        <div class="w-1/2 text-xs text-black lg:w-full lg:text-base">
+                        <div class="w-1/2 text-xs text-black lg:w-full lg:text-base" data-aos="zoom-in"
+                            data-aos-duration="1000">
                             Exceptional Healthcare. Every Step of the Way
                         </div>
 
                         <!-- Title -->
-                        <div class="text-2xl font-semibold lg:text-[6rem] lg:w-1/2 h-auto leading-tight ">
+                        <div class="text-2xl font-semibold lg:text-[6rem] lg:w-1/2 h-auto leading-tight "
+                            data-aos="zoom-in" data-aos-duration="1000">
                             <span class="text-[#edb42f] pattaya-regular">{{ $first }}</span>
                             @if ($middle)
                                 <span class="text-[#0035c6] pattaya-regular"> {{ $middle }} </span>
@@ -43,8 +45,8 @@
                         </div>
 
                         <!-- Button -->
-                        <div
-                            class="bg-[#0035c6] rounded-full px-1 py-1 w-fit cursor-pointer hover:scale-105 shadow hover:shadow-lg transition duration-300">
+                        <div class="bg-[#0035c6] rounded-full px-1 py-1 w-fit cursor-pointer hover:scale-105 shadow hover:shadow-lg transition duration-300"
+                            data-aos="zoom-in" data-aos-duration="1000">
                             <a href="#" class="flex items-center gap-2 lg:gap-5">
                                 <span class="ml-5 text-xs lg:text-xl">
                                     MAKE AN APPOINTMENT
@@ -90,6 +92,7 @@
 <script>
     const swiper2 = new Swiper(".myBannerSwiper", {
         loop: true,
+        speed: 3000,
         autoplay: {
             delay: 5000,
             disableOnInteraction: false,

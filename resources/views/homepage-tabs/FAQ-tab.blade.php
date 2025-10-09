@@ -1,11 +1,12 @@
 <div class="bg-[#EDB42F]/10 py-14">
     <div class="container flex flex-col gap-10 py-5 mx-auto lg:gap-5 lg:flex-row">
         <div class="flex flex-col gap-3 mx-3 lg:mt-8">
-            <div class="mb-10 text-2xl lg:text-5xl pattaya-regular text-[#0035c6]">
+            <div class="mb-10 text-2xl lg:text-5xl pattaya-regular text-[#0035c6]" data-aos="zoom-in"
+                data-aos-duration="1000">
                 Frequently Asked Questions
             </div>
             <div id="faqContainer1" class="flex flex-col gap-3 p-5 bg-transparent border cursor-pointer rounded-xl"
-                onclick="toggleContent('faqContainer1', 'content1')">
+                onclick="toggleContent('faqContainer1', 'content1')" data-aos="zoom-in" data-aos-duration="1000">
                 <div class="flex flex-row items-center justify-between p-3">
                     <div class="w-full text-base font-bold" id="q1">
                         How do I find the right doctor for my condition?
@@ -31,7 +32,7 @@
                 </div>
             </div>
             <div id="faqContainer2" class="flex flex-col gap-3 p-5 bg-transparent border cursor-pointer rounded-xl"
-                onclick="toggleContent('faqContainer2', 'content2')">
+                onclick="toggleContent('faqContainer2', 'content2')" data-aos="zoom-in" data-aos-duration="1000">
                 <div class="flex flex-row items-center justify-between p-3">
                     <div class="w-full text-base font-bold" id="q1">
                         How can I book an appointment?
@@ -58,7 +59,7 @@
                 </div>
             </div>
             <div id="faqContainer3" class="flex flex-col gap-3 p-5 bg-transparent border cursor-pointer rounded-xl"
-                onclick="toggleContent('faqContainer3', 'content3')">
+                onclick="toggleContent('faqContainer3', 'content3')" data-aos="zoom-in" data-aos-duration="1000">
                 <div class="flex flex-row items-center justify-between p-3">
                     <div class="w-full text-base font-bold" id="q1">
                         What specialties are available at Prime Doctors Hospital?
@@ -85,7 +86,7 @@
                 </div>
             </div>
             <div id="faqContainer4" class="flex flex-col gap-3 p-5 bg-transparent border cursor-pointer rounded-xl"
-                onclick="toggleContent('faqContainer4', 'content4')">
+                onclick="toggleContent('faqContainer4', 'content4')" data-aos="zoom-in" data-aos-duration="1000">
                 <div class="flex flex-row items-center justify-between p-3">
                     <div class="w-full text-base font-bold" id="q1">
                         How do I find the right doctor for my condition?
@@ -112,7 +113,7 @@
                 </div>
             </div>
             <div id="faqContainer5" class="flex flex-col gap-3 p-5 bg-transparent border cursor-pointer rounded-xl"
-                onclick="toggleContent('faqContainer5', 'content5')">
+                onclick="toggleContent('faqContainer5', 'content5')" data-aos="zoom-in" data-aos-duration="1000">
                 <div class="flex flex-row items-center justify-between p-3">
                     <div class="w-full text-base font-bold" id="q1">
                         What facilities and technologies does your hospital have?
@@ -140,8 +141,9 @@
             </div>
         </div>
         <div class="grid gap-14">
-            <img src="{{ asset('assets/faq-img1.png') }}" alt="" class="size-[35rem] lg:flex hidden">
-            <div class="flex justify-center lg:justify-start">
+            <img src="{{ asset('assets/faq-img1.png') }}" alt="" class="size-[35rem] lg:flex hidden"
+                data-aos="zoom-in" data-aos-duration="1000">
+            <div class="flex justify-center lg:justify-start" data-aos="zoom-in" data-aos-duration="1000">
                 <a href="#"
                     class="flex items-center gap-5 px-1 py-1 text-white transition duration-300 rounded-full shadow h-fit bg-[#0035c6] hover:scale-105 hover:shadow-lg">
                     <span class="ml-5 text-base">READ ALL</span>

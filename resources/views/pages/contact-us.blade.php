@@ -11,22 +11,23 @@
                 <div class="grid w-full grid-cols-1 gap-12 lg:grid-cols-2">
                     <!-- Left: Contact Info -->
                     <div>
-                        <h2 class="text-3xl font-bold text-[#1d4ed8] mb-2 pattaya-regular">Get in Touch</h2>
-                        <p class="mb-8 text-gray-600">
+                        <h2 class="text-3xl font-bold text-[#1d4ed8] mb-2 pattaya-regular" data-aos="zoom-in"
+                            data-aos-duration="1000">Get in Touch</h2>
+                        <p class="mb-8 text-gray-600" data-aos="zoom-in" data-aos-duration="1000">
                             Have questions, need assistance, or want to book an appointment? Our team at Prime Doctors
                             Medical
                             Center is here to help.
                         </p>
 
                         <!-- Image -->
-                        <div class="mb-6">
+                        <div class="mb-6" data-aos="zoom-in" data-aos-duration="1000">
                             <img src="{{ asset('assets/contact-us-img.png') }}" alt="Doctor with patient"
                                 class="object-cover w-full shadow-md rounded-2xl">
                         </div>
 
                         <!-- Contact Details -->
                         <div class="grid grid-cols-2 gap-5">
-                            <div class="flex items-start gap-3">
+                            <div class="flex items-start gap-3" data-aos="zoom-in" data-aos-duration="1000">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="h-5 text-[#edb42f]">
                                     <path fill="currentColor"
                                         d="M16 2A11.013 11.013 0 0 0 5 13a10.9 10.9 0 0 0 2.216 6.6s.3.395.349.452L16 30l8.439-9.953c.044-.053.345-.447.345-.447l.001-.003A10.9 10.9 0 0 0 27 13A11.013 11.013 0 0 0 16 2m0 15a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4" />
@@ -38,7 +39,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex items-start gap-3">
+                            <div class="flex items-start gap-3" data-aos="zoom-in" data-aos-duration="1000">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 text-[#edb42f]">
                                     <path fill="currentColor"
                                         d="m19.23 15.26l-2.54-.29a1.99 1.99 0 0 0-1.64.57l-1.84 1.84a15.05 15.05 0 0 1-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2 2 0 0 0-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07c.53 8.54 7.36 15.36 15.89 15.89c1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98"
@@ -50,7 +51,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex items-start gap-3">
+                            <div class="flex items-start gap-3" data-aos="zoom-in" data-aos-duration="1000">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 text-[#edb42f]">
                                     <path fill="currentColor"
                                         d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 4l-8 5l-8-5V6l8 5l8-5z"
@@ -62,7 +63,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex items-start gap-3">
+                            <div class="flex items-start gap-3" data-aos="zoom-in" data-aos-duration="1000">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 text-[#edb42f]">
                                     <path fill="currentColor"
                                         d="M17 22q-1.25 0-2.125-.875T14 19q0-.15.075-.7L7.05 14.2q-.4.375-.925.588T5 15q-1.25 0-2.125-.875T2 12t.875-2.125T5 9q.6 0 1.125.213t.925.587l7.025-4.1q-.05-.175-.062-.337T14 5q0-1.25.875-2.125T17 2t2.125.875T20 5t-.875 2.125T17 8q-.6 0-1.125-.213T14.95 7.2l-7.025 4.1q.05.175.063.338T8 12t-.012.363t-.063.337l7.025 4.1q.4-.375.925-.587T17 16q1.25 0 2.125.875T20 19t-.875 2.125T17 22"
@@ -110,7 +111,7 @@
                     </div>
 
                     <!-- Right: Contact Form -->
-                    <div class="p-8 bg-white shadow-md rounded-2xl h-fit">
+                    <div class="p-8 bg-white shadow-md rounded-2xl h-fit" data-aos="zoom-in" data-aos-duration="1000">
                         <h3 class="text-3xl font-semibold text-[#1d4ed8] mb-6 pattaya-regular">Fill Up The Form</h3>
 
                         <form action="#" method="POST" class="flex flex-col justify-between gap-8">
@@ -118,26 +119,26 @@
                             <div class="space-y-3">
                                 <label class="block mb-1 font-medium text-[#1d4ed8]">Full Name</label>
                                 <input type="text" name="name" placeholder="Enter your full name"
-                                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    class="w-full p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
 
                             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                                 <div class="space-y-3">
                                     <label class="block mb-1 font-medium text-[#1d4ed8]">Email Address</label>
                                     <input type="email" name="email" placeholder="Enter your email address"
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        class="w-full p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 </div>
                                 <div class="space-y-3">
                                     <label class="block mb-1 font-medium text-[#1d4ed8]">Phone No.</label>
                                     <input type="text" name="phone" placeholder="Enter your phone no."
-                                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        class="w-full p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 </div>
                             </div>
 
                             <div class="space-y-3">
                                 <label class="block mb-1 font-medium text-[#1d4ed8]">Subject</label>
                                 <select name="subject"
-                                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    class="w-full p-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     <option value="">Select a subject</option>
                                     <option value="appointment">Appointment</option>
                                     <option value="inquiry">General Inquiry</option>
@@ -167,7 +168,7 @@
                 </div>
 
                 <!-- Google Map -->
-                <div class=" border-2 border-[#edb42f]">
+                <div class=" border-2 border-[#edb42f]" data-aos="zoom-in" data-aos-duration="1000">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4835.908790606117!2d121.17952178551498!3d13.913219458731916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd15862b71d085%3A0x670d9d43e1b48f14!2sPrime%20Doctors%20Ambulatory%20Care%20%26%20Diagnostic%20Clinic%20-%20Lipa%20City!5e1!3m2!1sen!2sph!4v1759822340781!5m2!1sen!2sph"
                         style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"

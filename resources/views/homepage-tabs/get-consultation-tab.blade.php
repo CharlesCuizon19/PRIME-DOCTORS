@@ -1,4 +1,4 @@
-<div class="hidden lg:pb-20 lg:flex">
+<div class="hidden lg:pb-20 lg:flex" data-aos="zoom-in" data-aos-duration="1000">
     <div class="container relative mx-auto lg:rounded-[3rem] lg:w-fit lg:h-fit bg-[#edb42f]">
         <div class="flex items-center justify-center">
             <img src="{{ asset('assets/rectangle.png') }}" alt="">
@@ -35,7 +35,7 @@
 </div>
 
 {{-- GET CONSULTATION MOBILE --}}
-<div class="flex lg:py-20 lg:hidden">
+<div class="flex lg:py-20 lg:hidden" data-aos="zoom-in" data-aos-duration="1000">
     <div class="bg-no-repeat bg-cover bg-[#edb42f]" style="background-image: url({{ asset('assets/rectangle2.png') }})">
         <div class="flex flex-col gap-8 px-3 py-10">
             <div class="text-2xl text-white pattaya-regular">

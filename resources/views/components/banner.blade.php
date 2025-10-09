@@ -17,7 +17,7 @@
                 class="relative flex flex-col items-center justify-center gap-5 mx-3 mt-2 text-center lg:text-left lg:mt-0 lg:items-start">
                 <div
                     class="flex flex-col items-center w-full gap-5 text-5xl font-bold lg:items-start lg:text-left lg:mt-[13rem]">
-                    <div class="hidden lg:flex">
+                    <div class="hidden lg:flex" data-aos="zoom-in" data-aos-duration="1000">
                         <p class="text-sm text-[#0035c6] lg:text-base">
                             Home / <span>{{ $page }}</span>
                             <span>
@@ -25,7 +25,7 @@
                             </span>
                         </p>
                     </div>
-                    <div>
+                    <div data-aos="zoom-in" data-aos-duration="1000">
                         <span class="text-[#0035c6] lg:text-[100px] pattaya-regular">
                             {{ $title1 }} <span class="text-[#edb42f] pattaya-regular">{{ $title2 }}</span>
                         </span>

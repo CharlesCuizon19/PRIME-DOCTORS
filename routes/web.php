@@ -2,17 +2,30 @@
 
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BannersController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+
+
+
+Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/admin/login', [AuthController::class, 'login'])->name('login.post');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::middleware('auth')->group(function () {
+    // HOMEPAGE BANNER
+    Route::get('admin/homepageBanner', [BannersController::class, 'index'])->name('homepage.banner');
+    Route::post('admin/homepageBanner/createBanner', [BannersController::class, 'create'])->name('banner.create');
+    Route::put('admin/homepageBanner/updateBanner/{id}', [BannersController::class, 'update'])->name('banner.update');
+    Route::delete('admin/homepageBanner/{id}', [BannersController::class, 'destroy'])->name('banner.destroy');
+
+    // DOCTORS MANAGEMENT
+    Route::get('/doctors', [PageController::class, 'index'])->name('doctors');
+    Route::get('/doctors/create', [PageController::class, 'create_doctor'])->name('doctor.create');
+    Route::put('/doctors/{id}', [PageController::class, 'update_doctor'])->name('doctor.update');
+    Route::delete('/doctors/{id}', [PageController::class, 'destroy_doctor'])->name('doctor.destroy');
+});
 
 
 // HOME

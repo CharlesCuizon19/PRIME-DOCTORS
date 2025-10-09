@@ -131,6 +131,48 @@ class PageController extends Controller
                 'clinic_hours' => 'Monday to Friday: 9:00 AM - 5:00 PM',
                 'telephone' => '+1 (555) 123-4567',
             ],
+            (object) [
+                'id' => 4,
+                'profile_img_id' => null,
+                'name' => 'Dr. Jugger Naut',
+                'gender' => 'Male',
+                'language' => 'Bisaya',
+                'specialization' => 'Cardiologist',
+                'subSpecialization' => null,
+                'clinic_room_number' => 'Room 101, West Wing',
+                'phone_number' => '+63 912 345 6789',
+                'language' => 'English, Filipino, Bisaya',
+                'clinic_hours' => 'Monday to Friday: 9:00 AM - 5:00 PM',
+                'telephone' => '+1 (555) 123-4567',
+            ],
+            (object) [
+                'id' => 4,
+                'profile_img_id' => null,
+                'name' => 'Dr. Jugger Naut',
+                'gender' => 'Male',
+                'language' => 'Bisaya',
+                'specialization' => 'Cardiologist',
+                'subSpecialization' => null,
+                'clinic_room_number' => 'Room 101, West Wing',
+                'phone_number' => '+63 912 345 6789',
+                'language' => 'English, Filipino, Bisaya',
+                'clinic_hours' => 'Monday to Friday: 9:00 AM - 5:00 PM',
+                'telephone' => '+1 (555) 123-4567',
+            ],
+            (object) [
+                'id' => 4,
+                'profile_img_id' => null,
+                'name' => 'Dr. Jugger Naut',
+                'gender' => 'Male',
+                'language' => 'Bisaya',
+                'specialization' => 'Cardiologist',
+                'subSpecialization' => null,
+                'clinic_room_number' => 'Room 101, West Wing',
+                'phone_number' => '+63 912 345 6789',
+                'language' => 'English, Filipino, Bisaya',
+                'clinic_hours' => 'Monday to Friday: 9:00 AM - 5:00 PM',
+                'telephone' => '+1 (555) 123-4567',
+            ],
         ];
 
         $news = collect($news)->sortByDesc('date')->take(4);
@@ -147,7 +189,8 @@ class PageController extends Controller
     }
     public function show_service($id)
     {
-        $service = [
+
+        $services = [
             (object) [
                 'id' => 1,
                 'title' => 'General Services',
@@ -210,9 +253,11 @@ class PageController extends Controller
             ],
         ];
 
-        $service = collect($service)->where('id', $id)->first();
+        $service = collect($services)->where('id', $id)->first();
 
-        return view('pages.show_service', compact('service'));
+        $services = collect($services)->where('id', '!=', $id)->take(3);
+
+        return view('pages.show_service', compact('service', 'services'));
     }
 
     public function careers()
@@ -567,6 +612,8 @@ class PageController extends Controller
                 ],
             ],
         ];
+
+
 
         foreach ($careers as $career) {
             $postedDate = Carbon::parse($career->date);
@@ -1018,8 +1065,8 @@ class PageController extends Controller
         $doctor = collect($doctors)->where('id', $id)->first();
         $doctor_count = collect($doctors)->where('id', $id)->count();
 
-        $related_doctors = collect($doctors)->where('specialization', $doctor->specialization)->all();
-        $related_doctors_count = collect($doctors)->where('specialization', $doctor->specialization)->count();
+        $related_doctors = collect($doctors)->where('specialization', $doctor->specialization)->where('id', '!=', $id)->all();
+        $related_doctors_count = collect($doctors)->where('specialization', $doctor->specialization)->where('id', '!=', $id)->count();
 
         return view('pages.find-a-doctor-singlepage', compact('doctor', 'doctor_count', 'related_doctors_count', 'related_doctors'));
     }

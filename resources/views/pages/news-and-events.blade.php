@@ -20,7 +20,8 @@
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
                                 @foreach ($chunk as $item)
                                     <a href="{{ route('news-and-events.singlepage', ['id' => $item->id]) }}"
-                                        class="overflow-hidden cursor-pointer rounded-2xl">
+                                        class="overflow-hidden cursor-pointer rounded-2xl" data-aos="zoom-in"
+                                        data-aos-duration="1000">
                                         <div class="overflow-hidden rounded-2xl">
                                             <img src="{{ asset($item->thumbnail_image_id ?? 'assets/news-img1.png') }}"
                                                 alt="Health Check-Up"

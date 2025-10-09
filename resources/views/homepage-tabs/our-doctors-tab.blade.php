@@ -1,23 +1,21 @@
-<!-- Make sure Swiper CSS & JS are included -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
 <div class="bg-gray-50">
     <div>
         <div class="grid gap-10 px-4 mx-auto py-14 lg:py-16 lg:grid-cols-1 max-w-7xl">
             <!-- Section Titles -->
-            <div class="flex items-center justify-center lg:justify-start lg:items-start">
+            <div class="flex items-center justify-center lg:justify-start lg:items-start" data-aos="zoom-in"
+                data-aos-duration="1000">
                 <span class="px-4 py-1 text-sm font-semibold text-blue-700 bg-white rounded-full w-fit h-fit">
                     Our Doctors
                 </span>
             </div>
             <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center justify-center w-full lg:justify-start">
+                <div class="flex items-center justify-center w-full lg:justify-start" data-aos="zoom-in"
+                    data-aos-duration="1000">
                     <span class="text-2xl font-bold text-[#0035c6] lg:text-5xl pattaya-regular">
                         Meet the Professionals
                     </span>
                 </div>
-                <div class="justify-start hidden lg:flex">
+                <div class="justify-start hidden lg:flex" data-aos="zoom-in" data-aos-duration="1000">
                     <a href="#"
                         class="flex items-center gap-5 px-1 py-1 text-white transition duration-300 rounded-full shadow bg-[#0035c6] hover:scale-105 hover:shadow-lg">
                         <span class="ml-5 text-base text-nowrap">VIEW ALL DOCTORS</span>
@@ -32,26 +30,28 @@
             </div>
 
             <!-- ✅ Swiper -->
-            <div class="overflow-hidden swiper doctors-swiper">
-                <div class="swiper-wrapper">
-                    @foreach ($doctors as $item)
-                        <div class="swiper-slide">
-                            <div
-                                class="flex flex-col justify-end w-full transition duration-300 bg-white border rounded-lg shadow-md hover:border-blue-700 bg-opacity-80">
-                                <img src="{{ asset('assets/doctor-thumbnail.png') }}" alt=""
-                                    class="object-cover rounded-md">
-                                <div class="p-4">
-                                    <h3 class="font-semibold text-blue-700">{{ $item->name }}</h3>
-                                    <p class="text-sm text-[#edb42f]">{{ $item->specialization }}</p>
-                                </div>
+            <div class="overflow-hidden">
+                <div class="swiper doctors-swiper" data-aos="zoom-in" data-aos-duration="1000">
+                    <div class="swiper-wrapper">
+                        @foreach ($doctors as $item)
+                            <div class="swiper-slide">
+                                <a href="{{ route('find-a-doctor.doctor-details', ['id' => $item->id]) }}"
+                                    class="flex flex-col justify-end w-full transition duration-300 bg-white border rounded-lg shadow-md hover:border-blue-700 bg-opacity-80">
+                                    <img src="{{ asset('assets/doctor-thumbnail.png') }}" alt=""
+                                        class="object-cover rounded-md">
+                                    <div class="p-4">
+                                        <h3 class="font-semibold text-blue-700">{{ $item->name }}</h3>
+                                        <p class="text-sm text-[#edb42f]">{{ $item->specialization }}</p>
+                                    </div>
+                                </a>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
 
             <!-- Navigation -->
-            <div class="flex justify-center w-auto gap-4 lg:w-full">
+            <div class="flex justify-center w-auto gap-4 lg:w-full" data-aos="zoom-in" data-aos-duration="1000">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                     class="h-12 transition duration-300 cursor-pointer text-[#0035c6] hover:scale-110 prev-btn"
                     data-swiper-action="prev">

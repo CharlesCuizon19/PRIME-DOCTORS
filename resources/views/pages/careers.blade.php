@@ -12,7 +12,7 @@
 
         <div class="h-full py-24 bg-gray-100">
             <div class="container mx-auto">
-                <div class="flex items-center mb-10 space-x-2 md:col-span-1">
+                <div class="flex items-center mb-10 space-x-2 md:col-span-1" data-aos="zoom-in" data-aos-duration="1000">
                     <span class="text-xl text-yellow-500">●</span>
                     <h3 class="text-lg font-bold text-blue-900"><span
                             class="text-lg font-bold text-blue-900">{{ $careers_count }}</span> Open Positions</h3>
@@ -24,7 +24,7 @@
                                 <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                                     @foreach ($chunk as $career)
                                         <!-- Job Card -->
-                                        <div>
+                                        <div data-aos="zoom-in" data-aos-duration="1000">
                                             <a href="{{ route('careers.show', $career->id) }}">
                                                 <div
                                                     class="overflow-hidden transition duration-300 shadow cursor-pointer rounded-3xl group hover:shadow-lg">
@@ -42,7 +42,7 @@
                                                                 </span>
                                                             </div>
                                                             <p class="text-sm text-gray-500">
-                                                                Posted <span>{{ $career->monthsAgo }}</span> months ago
+                                                                Posted <span>{{ $career->monthsAgo }}</span> month(s) ago
                                                             </p>
                                                         </div>
                                                     </div>
@@ -58,7 +58,7 @@
                                                                         stroke-width="0.5" stroke="currentColor" />
                                                                 </svg>
                                                             </div>
-                                                            <span><span>{{ $career->vacancy }}</span> vacancy</span>
+                                                            <span><span>{{ $career->vacancy }}</span>{{ $career->vacancy > 1 ? ' vacancies' : ' vacancy' }}</span>
                                                         </div>
                                                         <a href="#"
                                                             class="flex items-center justify-center gap-1 px-3 font-medium text-blue-600 transition duration-300 hover:border hover:border-blue-600 rounded-xl">

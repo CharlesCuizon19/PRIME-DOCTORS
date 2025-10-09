@@ -1,12 +1,13 @@
 <div class="flex items-center justify-center py-12 bg-white">
     <div class="container grid items-center justify-center max-w-6xl gap-10 p-6 mx-auto text-center lg:grid-cols-1">
         <div class="flex items-center justify-center">
-            <div class="px-4 py-1 text-sm font-semibold text-blue-700 bg-gray-100 rounded-full w-fit h-fit">
+            <div class="px-4 py-1 text-sm font-semibold text-blue-700 bg-gray-100 rounded-full w-fit h-fit"
+                data-aos="zoom-in" data-aos-duration="1000">
                 News & Events
             </div>
         </div>
         <div class="flex justify-center mb-12 text-2xl font-bold text-[#0035c6] itemce lg:text-5xl lg:w-full">
-            <div class="w-[70%] pattaya-regular leading-tight">
+            <div class="w-[70%] pattaya-regular leading-tight" data-aos="zoom-in" data-aos-duration="1000">
                 Expert Advice & Health
                 Tips for a
                 Smarter Wellness Journey
@@ -14,7 +15,8 @@
         </div>
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             @foreach ($news as $item)
-                <div class="overflow-hidden transition duration-300 cursor-pointer hover:scale-105">
+                <div class="overflow-hidden transition duration-300 cursor-pointer hover:scale-105" data-aos="zoom-in"
+                    data-aos-duration="1000">
                     <img src="{{ asset($item->thumbnail_image_id ?? 'assets/logo.png') }}"
                         onerror="this.onerror=null; this.src='{{ asset('assets/logo.png') }}';" alt="Health Check-Up"
                         class="object-cover w-full h-[70%] rounded-2xl">

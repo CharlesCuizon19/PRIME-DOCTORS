@@ -47,19 +47,20 @@ treatment',
 <div class="h-full py-16 bg-no-repeat bg-cover" style="background-image: url({{ asset('assets/ourservices-bg.png') }});">
     <div class="container flex flex-col px-6 mx-auto">
         <!-- Section Tag -->
-        <div class="flex justify-center mb-10">
+        <div class="flex justify-center mb-10" data-aos="zoom-in" data-aos-duration="1000">
             <span class="px-4 py-1 text-sm font-semibold text-blue-700 bg-white rounded-full">
                 Our Services
             </span>
         </div>
 
         <!-- Title -->
-        <h2 class="mb-5 text-2xl font-bold text-center text-[#0035c6] md:text-4xl lg:text-5xl pattaya-regular">
+        <h2 class="mb-5 text-2xl font-bold text-center text-[#0035c6] md:text-4xl lg:text-5xl pattaya-regular"
+            data-aos="zoom-in" data-aos-duration="1000">
             Comprehensive Medical Services
         </h2>
 
         <!-- Swiper Container -->
-        <div class="swiper">
+        <div class="swiper" data-aos="zoom-in" data-aos-duration="1000">
             <div class="pt-10 lg:pt-24 swiper-wrapper">
                 @foreach ($services as $item)
                     <div
@@ -102,7 +103,7 @@ treatment',
         </div>
 
         <!-- Button -->
-        <div class="flex justify-center">
+        <div class="flex justify-center" data-aos="zoom-in" data-aos-duration="1000">
             <a href="{{ route('services') }}"
                 class="flex items-center gap-5 px-1 py-1 text-white transition duration-300 rounded-full shadow bg-[#0035c6] hover:scale-105 hover:shadow-lg">
                 <span class="ml-5 text-base">VIEW ALL SERVICES</span>
@@ -116,3 +117,89 @@ treatment',
         </div>
     </div>
 </div>
+
+<style>
+    /* Custom styles for Swiper */
+    .swiper,
+    .doctors-swiper {
+        width: 100%;
+        padding-bottom: 0px;
+    }
+
+    .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .swiper-pagination {
+        position: relative;
+        bottom: 10px;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: #1e40af;
+        /* Matches blue-700 theme */
+    }
+</style>
+
+<script>
+    const swiper = new Swiper('.swiper', {
+        // Responsive breakpoints
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 32,
+        breakpoints: {
+            768: {
+                slidesPerView: 2,
+            },
+            1024: {
+                slidesPerView: 4,
+            },
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+
+
+    function toggleContent(containerId, contentId) {
+        const allContainers = document.querySelectorAll('[id^="faqContainer"]');
+        const allContents = document.querySelectorAll('[id^="content"]');
+        const allDownIcons = document.querySelectorAll('.down');
+        const allUpIcons = document.querySelectorAll('.up');
+
+        // Close all FAQs first
+        allContents.forEach(content => {
+            content.style.maxHeight = '0px';
+        });
+        allContainers.forEach(container => {
+            container.classList.remove('border-[#EDB42F]');
+            container.classList.remove('divide-y');
+            container.classList.remove('text-[#EDB42F]');
+        });
+        allDownIcons.forEach(icon => icon.classList.remove('hidden'));
+        allUpIcons.forEach(icon => icon.classList.add('hidden'));
+
+        // Open the clicked one
+        const container = document.getElementById(containerId);
+        const content = document.getElementById(contentId);
+        const downIcon = container.querySelector('.down');
+        const upIcon = container.querySelector('.up');
+
+        if (content.style.maxHeight === '0px' || content.style.maxHeight === '') {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            container.classList.add('border-[#EDB42F]');
+            container.classList.add('text-[#EDB42F]');
+            container.classList.add('divide-y');
+            downIcon.classList.add('hidden');
+            upIcon.classList.remove('hidden');
+        }
+    }
+</script>
