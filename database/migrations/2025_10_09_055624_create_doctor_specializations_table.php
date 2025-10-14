@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('doctor_id')->constrained('doctors')->onDelete('cascade');
             $table->foreignId('specialization_id')->constrained('specializations')->onDelete('cascade');
+            $table->enum('type', ['Primary', 'Secondary'])->default('Secondary');
             $table->timestamps();
         });
     }

@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Specializations extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'specialization_name',
+    ];
+
+    // Relationships
+    public function doctors()
+    {
+        return $this->belongsToMany(Doctors::class, 'doctor_specialization', 'specialization_id', 'doctor_id')->withPivot('type');
+    }
 }

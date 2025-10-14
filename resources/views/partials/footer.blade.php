@@ -101,26 +101,34 @@
                         <div class="text-4xl font-semibold text-[#0035c6] pattaya-regular">
                             Newsletter
                         </div>
-                        <div class="flex items-center w-full max-w-md px-1 py-2 bg-gray-100 rounded-full shadow">
+
+                        <form action="{{ route('newsletter.store') }}" method="POST" class="flex items-center w-full max-w-md px-1 py-2 bg-gray-100 rounded-full shadow">
+                            @csrf
+
                             <!-- Email Input -->
-                            <input type="email" placeholder="Email Address"
-                                class="flex-grow w-full px-4 py-3 text-gray-700 bg-transparent focus:outline-none">
+                            <input type="email" name="email" placeholder="Email Address"
+                                class="flex-grow w-full px-4 py-3 text-gray-700 bg-transparent focus:outline-none"
+                                required>
 
                             <!-- Subscribe Button -->
-                            <button
+                            <button type="submit"
                                 class="relative flex items-center gap-3 transition duration-300 rounded-full bg-[#edb42f] py-auto hover:scale-105 hover:shadow-lg">
                                 <span class="font-semibold text-white ml-7">SUBSCRIBE</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-12 text-white">
                                     <g fill="none" stroke="currentColor" stroke-width="1">
                                         <circle cx="12" cy="12" r="10" />
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M8 12h8m0 0l-3-3m3 3l-3 3" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8m0 0l-3-3m3 3l-3 3" />
                                     </g>
                                 </svg>
                             </button>
-                        </div>
+                        </form>
 
+                        <!-- Validation Errors -->
+                        @error('email')
+                        <p class="mt-2 text-red-600 font-medium">{{ $message }}</p>
+                        @enderror
                     </div>
+
                 </div>
 
             </div>
@@ -147,3 +155,16 @@
 
 <!-- FontAwesome for icons -->
 <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
+<!-- SweetAlert Script -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Subscribed!',
+        text: "{{ session('success') }}",
+        timer: 2500,
+        showConfirmButton: false
+    });
+</script>
+@endif

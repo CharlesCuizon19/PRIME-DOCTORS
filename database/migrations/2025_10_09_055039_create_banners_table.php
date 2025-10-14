@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->text('context')->nullable();
+            $table->string('link')->nullable();
             $table->foreignId('banner_image_id')->constrained('images')->onDelete('cascade');
             $table->timestamps();
         });

@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
         User::create([
             'email' => 'hello@rweb.solutions',
             'password' => Hash::make('*'), // Use a secure password in production
+            'is_active' => true,
             'created_at' => now(),
             'updated_at' => now(),
 

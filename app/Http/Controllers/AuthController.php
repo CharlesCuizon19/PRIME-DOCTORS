@@ -46,7 +46,7 @@ class AuthController extends Controller
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
 
-            return redirect('admin/homepageBanner')->with('success', 'Logged in successfully!');
+            return redirect()->route('admin.banners.index')->with('success', 'Logged in successfully!');
         }
 
         return back()->withErrors([

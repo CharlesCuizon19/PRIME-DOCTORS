@@ -1,32 +1,24 @@
 <?php
 
+use App\Http\Controllers\CareersController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ResponsibilitiesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BannersController;
-
-
-
+use App\Http\Controllers\BenefitsController;
+use App\Http\Controllers\DoctorsController;
+use App\Http\Controllers\InclusionsController;
+use App\Http\Controllers\LanguagesController;
+use App\Http\Controllers\NewslettersController;
+use App\Http\Controllers\QualificationsController;
+use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\SpecializationsController;
 
 Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/admin/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-Route::middleware('auth')->group(function () {
-    // HOMEPAGE BANNER
-    Route::get('admin/homepageBanner', [BannersController::class, 'index'])->name('homepage.banner');
-    Route::post('admin/homepageBanner/createBanner', [BannersController::class, 'create'])->name('banner.create');
-    Route::put('admin/homepageBanner/updateBanner/{id}', [BannersController::class, 'update'])->name('banner.update');
-    Route::delete('admin/homepageBanner/{id}', [BannersController::class, 'destroy'])->name('banner.destroy');
-
-    // DOCTORS MANAGEMENT
-    Route::get('/doctors', [PageController::class, 'index'])->name('doctors');
-    Route::get('/doctors/create', [PageController::class, 'create_doctor'])->name('doctor.create');
-    Route::put('/doctors/{id}', [PageController::class, 'update_doctor'])->name('doctor.update');
-    Route::delete('/doctors/{id}', [PageController::class, 'destroy_doctor'])->name('doctor.destroy');
-});
-
 
 // HOME
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -60,3 +52,23 @@ Route::get('/home/news-and-events/{id}', [PageController::class, 'show_news'])->
 //CONTACT US
 Route::get('/home/contact-us', [PageController::class, 'contact_us'])->name('contact-us.show');
 Route::post('/home/contact-us', [PageController::class, 'submit_contact_form'])->name('contact-us.submit');
+
+// Frontend newsletter submission
+Route::post('/newsletter', [NewslettersController::class, 'store'])->name('newsletter.store');
+
+//ADMIN PAGE
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::resource('banners', BannersController::class);
+    Route::resource('services', ServicesController::class);
+    Route::resource('benefits', BenefitsController::class);
+    Route::resource('inclusions', InclusionsController::class);
+    Route::resource('careers', CareersController::class);
+    Route::resource('responsibilities', ResponsibilitiesController::class);
+    Route::resource('qualifications', QualificationsController::class);
+    Route::resource('doctors', DoctorsController::class);
+    Route::resource('specialization', SpecializationsController::class);
+    Route::resource('languages', LanguagesController::class);
+    Route::resource('newsletters', NewslettersController::class);
+
+    Route::get('newsletter-export', [NewslettersController::class, 'export'])->name('newsletter.export');
+});

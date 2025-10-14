@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CareerResponsibilities extends Model
 {
     use HasFactory;
+
+    protected $table = 'career_responsibilities';
+    protected $fillable = ['career_id', 'responsibility_id'];
 }
