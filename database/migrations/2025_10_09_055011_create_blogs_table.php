@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('slug')->nullable();
             $table->string('title')->nullable();
             $table->text('context')->nullable();
+            $table->text('blog_date')->nullable();
             $table->foreignId('category_id')->constrained('blog_categories')->onDelete('cascade');
             $table->foreignId('blog_image_id')->constrained('images')->onDelete('cascade');
             $table->foreignId('uploaded_by_id')->constrained('users')->onDelete('cascade');

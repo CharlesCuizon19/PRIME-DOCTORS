@@ -1,13 +1,13 @@
 @extends('admin.layouts.adminapp')
 
-@section('title', 'Homepage Banner / Create Banner')
+@section('title', 'Blogs / Create Blog')
 
 @section('admin-content')
 <div class="flex justify-center items-center min-h-[85vh] bg-gray-50">
     <div class="w-full max-w-screen-2xl bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-        <h1 class="text-3xl font-extrabold text-gray-800 mb-8 border-b pb-3">Create Banner</h1>
+        <h1 class="text-3xl font-extrabold text-gray-800 mb-8 border-b pb-3">Create Blog</h1>
 
-        {{-- ✅ Flash Messages --}}
+        {{-- Flash Messages --}}
         @if(session('success'))
         <div class="mb-6 p-4 text-green-800 bg-green-100 border border-green-300 rounded-lg">
             {{ session('success') }}
@@ -19,104 +19,125 @@
         </div>
         @endif
 
-        {{-- ✅ Banner Form --}}
-        <form action="{{ route('admin.banners.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+        {{-- Blog Form --}}
+        <form action="{{ route('admin.blogs.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
 
             {{-- Title --}}
             <div>
-                <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">Title <span class="text-red-500">*</span></label>
-                <input type="text" name="title" id="title"
+                <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">
+                    Title <span class="text-red-500">*</span>
+                </label>
+                <input type="text" name="title" id="title" value="{{ old('title') }}"
                     class="block w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#FBD55B] focus:border-[#FBD55B]"
-                    value="{{ old('title') }}" placeholder="Enter banner title" required>
+                    placeholder="Enter blog title" required>
                 @error('title')
                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            {{-- Context (CKEditor) --}}
+            {{-- Slug --}}
             <div>
-                <label for="context" class="block text-sm font-semibold text-gray-700 mb-2">Context</label>
-                <textarea name="context" id="context" rows="5"
+                <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">
+                    Slug <span class="text-red-500">*</span>
+                </label>
+                <input type="text" name="slug" id="slug" value="{{ old('slug') }}"
                     class="block w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#FBD55B] focus:border-[#FBD55B]"
-                    placeholder="Enter banner context (optional)">{{ old('context') }}</textarea>
+                    placeholder="Enter slug title" required>
+                @error('slug')
+                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- Category --}}
+            <div>
+                <label for="category_name" class="block text-sm font-semibold text-gray-700 mb-2">
+                    Category <span class="text-red-500">*</span>
+                </label>
+                <select name="category_name" id="category_name"
+                    class="block w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#FBD55B] focus:border-[#FBD55B]" required>
+                    <option value="">-- Select Category --</option>
+                    @foreach($blogcategories as $category)
+                    <option value="{{ $category->category_name }}"
+                        {{ old('category_name') == $category->category_name ? 'selected' : '' }}>
+                        {{ $category->category_name }}
+                    </option>
+                    @endforeach
+                </select>
+                @error('category_name')
+                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- Blog Date --}}
+            <div>
+                <label for="blog_date" class="block text-sm font-semibold text-gray-700 mb-2">
+                    Date <span class="text-red-500">*</span>
+                </label>
+                <input type="date" name="blog_date" id="blog_date" value="{{ old('blog_date') }}"
+                    class="block w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#FBD55B] focus:border-[#FBD55B]"
+                    required>
+                @error('blog_date')
+                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- Context --}}
+            <div>
+                <label for="context" class="block text-sm font-semibold text-gray-700 mb-2">Content</label>
+                <textarea name="context" id="context" rows="6"
+                    class="block w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#FBD55B] focus:border-[#FBD55B]"
+                    placeholder="Enter blog content">{{ old('context') }}</textarea>
                 @error('context')
                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            {{-- Location --}}
-            <!-- <div>
-                <label for="location" class="block text-sm font-semibold text-gray-700 mb-2">Location</label>
-                <input type="text" name="location" id="location"
-                    class="block w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#FBD55B] focus:border-[#FBD55B]"
-                    value="{{ old('location') }}" placeholder="e.g. Homepage, About Page">
-                @error('location')
-                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div> -->
-
-            {{-- Link --}}
-            <!-- <div>
-                <label for="link" class="block text-sm font-semibold text-gray-700 mb-2">Link (Optional)</label>
-                <input type="url" name="link" id="link"
-                    class="block w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#FBD55B] focus:border-[#FBD55B]"
-                    value="{{ old('link') }}" placeholder="https://example.com">
-                @error('link')
-                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div> -->
-
-            {{-- File Upload --}}
+            {{-- Blog Image Upload --}}
             <div class="border-2 border-dashed rounded-xl p-8 text-center bg-gray-50 hover:bg-gray-100 transition relative">
-                <p class="font-semibold text-gray-700">Upload Image or Video</p>
-                <p class="text-sm text-gray-500 mb-4">
-                    Accepted formats: JPG, PNG, WEBP, MP4, MOV, AVI<br>
-                    Max size: <strong>2MB (image)</strong> or <strong>25MB (video)</strong>
-                </p>
+                <p class="font-semibold text-gray-700 mb-4">Upload Blog Image</p>
 
-                <label for="image" class="cursor-pointer inline-flex flex-col items-center bg-[#FBD55B] hover:bg-[#e4c14e] text-black font-semibold px-6 py-3 rounded-lg shadow transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <label for="blog_image_id"
+                    class="cursor-pointer inline-flex flex-col items-center bg-[#FBD55B] hover:bg-[#e4c14e] text-black font-semibold px-6 py-3 rounded-lg shadow transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-1" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M3 15a4 4 0 014-4h.586a1 1 0 01.707.293l2.414 2.414a1 1 0 001.414 0l2.414-2.414a1 1 0 01.707-.293H17a4 4 0 014 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2v-1z" />
                     </svg>
-                    <span>Select File</span>
-                    <input type="file" name="image" id="image" class="hidden" accept="image/*,video/*">
+                    <span>Select Image</span>
+                    <input type="file" name="blog_image_id" id="blog_image_id" class="hidden" accept="image/*">
                 </label>
 
-                @error('image')
+                @error('blog_image_id')
                 <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                 @enderror
             </div>
 
             {{-- Preview Section --}}
-            <div id="preview-container" class="hidden mt-4">
+            <div id="preview-container" class="hidden mt-4 flex flex-col items-center">
                 <p class="font-semibold mb-2">Preview:</p>
-                <div id="preview" class="relative inline-block rounded-lg overflow-hidden shadow-md"></div>
+                <div id="preview" class="relative inline-block rounded-lg overflow-visible shadow-md"></div>
             </div>
 
             {{-- Buttons --}}
             <div class="flex justify-between items-center pt-4">
-                <a href="{{ route('admin.banners.index') }}"
+                <a href="{{ route('admin.blogs.index') }}"
                     class="px-4 py-2 border rounded-lg bg-gray-100 hover:bg-gray-200 transition">← Back</a>
                 <button type="submit"
                     class="px-6 py-2 bg-[#FBD55B] text-black font-semibold rounded-lg shadow hover:bg-[#e4c14e] transition">
-                    Save Banner
+                    Save Blog
                 </button>
             </div>
         </form>
     </div>
 </div>
 
-{{-- Scripts --}}
 @push('scripts')
 <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 <script>
-    // ✅ Initialize CKEditor on the correct textarea
     ClassicEditor.create(document.querySelector('#context')).catch(console.error);
 
-    // ✅ File Preview Logic
-    const imageInput = document.getElementById('image');
+    const imageInput = document.getElementById('blog_image_id');
     const previewContainer = document.getElementById('preview-container');
     const preview = document.getElementById('preview');
 
@@ -127,25 +148,15 @@
 
         const reader = new FileReader();
         reader.onload = function(e) {
-            // Show preview section
             previewContainer.classList.remove('hidden');
             previewContainer.classList.add('block');
 
-            let element;
-            if (file.type.startsWith("image/")) {
-                element = document.createElement("img");
-                element.src = e.target.result;
-                element.className = "w-full max-w-md h-auto rounded-lg shadow-lg object-cover";
-            } else if (file.type.startsWith("video/")) {
-                element = document.createElement("video");
-                element.src = e.target.result;
-                element.controls = true;
-                element.className = "w-full max-w-md h-auto rounded-lg shadow-lg";
-            }
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.className = "w-full max-w-md h-auto rounded-lg shadow-lg object-cover";
 
-            preview.appendChild(element);
+            preview.appendChild(img);
 
-            // Add remove button overlay
             const removeBtn = document.createElement("button");
             removeBtn.innerHTML = "✖";
             removeBtn.className =

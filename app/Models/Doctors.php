@@ -34,4 +34,9 @@ class Doctors extends Model
     {
         return $this->belongsTo(Images::class, 'doctor_image_id');
     }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }

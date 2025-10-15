@@ -14,6 +14,15 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('admin.blogs.index') }}"
+                        class="block py-2 pl-4 pr-6  
+              {{ Route::is('admin.blogs.*') ? 'bg-white text-black' : 'text-white' }} 
+              hover:bg-gray-200 rounded-xl hover:text-black">
+                        News & Events
+                    </a>
+                </li>
+
                 <li x-data="{ open: true }" class="space-y-1">
                     <button @click="open = !open"
                         class="flex items-center justify-between w-full py-2 pr-6 rounded-xl hover:bg-blue-800">
@@ -142,6 +151,22 @@
               {{ Route::is('admin.newsletters.*') ? 'bg-white text-black' : 'text-white' }} 
               hover:bg-gray-200 rounded-xl hover:text-black">
                         Newsletter
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.contacts.index') }}"
+                        class="block py-2 pl-4 pr-6  
+              {{ Route::is('admin.contacts.*') ? 'bg-white text-black' : 'text-white' }} 
+              hover:bg-gray-200 rounded-xl hover:text-black">
+                        Contacts
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.appointments.index') }}"
+                        class="block py-2 pl-4 pr-6  
+              {{ Route::is('admin.appointments.*') ? 'bg-white text-black' : 'text-white' }} 
+              hover:bg-gray-200 rounded-xl hover:text-black">
+                        Appointment
                     </a>
                 </li>
             </div>

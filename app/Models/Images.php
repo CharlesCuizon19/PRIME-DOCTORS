@@ -45,4 +45,9 @@ class Images extends Model
     {
         return $this->hasMany(Services::class, 'doctor_image_id');
     }
+
+    public function blogs()
+    {
+        return $this->hasMany(Blogs::class, 'blog_image_id');
+    }
 }

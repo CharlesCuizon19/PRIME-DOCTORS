@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\CareersController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ResponsibilitiesController;
@@ -7,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BannersController;
 use App\Http\Controllers\BenefitsController;
+use App\Http\Controllers\BlogsController;
+use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\InclusionsController;
 use App\Http\Controllers\LanguagesController;
@@ -14,6 +17,7 @@ use App\Http\Controllers\NewslettersController;
 use App\Http\Controllers\QualificationsController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SpecializationsController;
+use App\Models\Appointment;
 
 Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/admin/login', [AuthController::class, 'login'])->name('login.post');
@@ -55,6 +59,8 @@ Route::post('/home/contact-us', [PageController::class, 'submit_contact_form'])-
 
 // Frontend newsletter submission
 Route::post('/newsletter', [NewslettersController::class, 'store'])->name('newsletter.store');
+Route::post('/contact-us', [ContactsController::class, 'store'])->name('contacts.store');
+Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
 
 //ADMIN PAGE
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
@@ -69,6 +75,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resource('specialization', SpecializationsController::class);
     Route::resource('languages', LanguagesController::class);
     Route::resource('newsletters', NewslettersController::class);
+    Route::resource('contacts', ContactsController::class);
+    Route::resource('blogs', BlogsController::class);
+    Route::resource('appointments', AppointmentController::class);
+
 
     Route::get('newsletter-export', [NewslettersController::class, 'export'])->name('newsletter.export');
+    Route::get('contacts-export', [ContactsController::class, 'export'])->name('contacts.export');
+    Route::get('appointment-export', [ContactsController::class, 'export'])->name('appointment.export');
 });
