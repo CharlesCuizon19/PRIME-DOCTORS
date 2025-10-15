@@ -38,26 +38,25 @@
 
             {{-- Category --}}
             <div>
-                <label for="category_name" class="block text-sm font-semibold text-gray-700 mb-2">
+                <label for="category_id" class="block text-sm font-semibold text-gray-700 mb-2">
                     Category <span class="text-red-500">*</span>
                 </label>
-                <select name="category_name" id="category_name"
+                <select name="category_id" id="category_id"
                     class="block w-full border border-gray-300 rounded-lg px-4 py-2.5
-           focus:ring-2 focus:ring-[#FBD55B] focus:border-[#FBD55B]"
-                    required>
-
+        focus:ring-2 focus:ring-[#FBD55B] focus:border-[#FBD55B]" required>
                     <option value="">-- Select Category --</option>
                     @foreach($blogcategories as $category)
-                    <option value="{{ $category->category_name }}"
-                        {{ old('category_name', $blog->category->category_name ?? '') == $category->category_name ? 'selected' : '' }}>
+                    <option value="{{ $category->id }}"
+                        {{ old('category_id', $blog->category_id ?? '') == $category->id ? 'selected' : '' }}>
                         {{ $category->category_name }}
                     </option>
                     @endforeach
                 </select>
-                @error('category_name')
+                @error('category_id')
                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
+
 
             {{-- Blog Date --}}
             <div>

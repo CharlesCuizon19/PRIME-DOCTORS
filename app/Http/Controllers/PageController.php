@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlogCategories;
+use App\Models\Blogs;
+use App\Models\Careers;
+use App\Models\Doctors;
+use App\Models\Services;
 use Carbon\Carbon;
 
 class PageController extends Controller
@@ -185,7 +190,12 @@ class PageController extends Controller
     }
     public function services()
     {
-        return view('pages.services');
+        $services = Services::with([
+            'icon.file',
+            'benefits',
+            'inclusions'
+        ])->orderBy('created_at', 'desc')->get();
+        return view('pages.services', compact('services'));
     }
     public function show_service($id)
     {
@@ -262,365 +272,17 @@ class PageController extends Controller
 
     public function careers()
     {
-        $careers = [
-            (object) [
-                'id' => 1,
-                'img' => 'assets/careers-img2.png',
-                'title' => 'Medical Technologist',
-                'location' => 'Makati, Metro Manila',
-                'type' => 'Full-time',
-                'date' => '2023-10-01',
-                'vacancy' => 3,
-                'description' => 'We are seeking a dedicated and compassionate Medical Doctor to join our healthcare team. The ideal candidate will be responsible for diagnosing and treating patients, providing preventive care, and promoting overall health and wellness. The Medical Doctor will work closely with other healthcare professionals to ensure comprehensive patient care.',
-                'responsibilities' => [
-                    'Conduct thorough medical examinations and assessments of patients.',
-                    'Diagnose and treat a wide range of medical conditions and illnesses.',
-                    'Prescribe medications and therapies as needed.',
-                    'Provide preventive care, including vaccinations and health screenings.',
-                    'Educate patients on health maintenance and disease prevention.',
-                    'Collaborate with other healthcare professionals to develop and implement treatment plans.',
-                    'Maintain accurate and up-to-date patient records.',
-                    'Stay informed about the latest medical research and advancements in healthcare.',
-                ],
-                'qualifications' => [
-                    'Medical degree from an accredited institution.',
-                    'Valid medical license to practice in the Philippines.',
-                    'Proven experience as a Medical Doctor or in a similar role.',
-                    'Strong knowledge of medical procedures, treatments, and protocols.',
-                    'Excellent communication and interpersonal skills.',
-                    'Ability to work effectively in a team-oriented environment.',
-                    'Compassionate and patient-focused approach to care.',
-                ],
-            ],
-            (object) [
-                'id' => 2,
-                'img' => 'assets/careers-img1.png',
-                'title' => 'Registered Nurse (RN)',
-                'location' => 'Makati, Metro Manila',
-                'type' => 'Part-time',
-                'date' => '2024-10-01',
-                'vacancy' => 4,
-                'description' => 'We are looking for a skilled and compassionate Registered Nurse to join our healthcare team. The ideal candidate will be responsible for providing high-quality nursing care to patients, assisting with medical procedures, and promoting overall health and wellness. The Registered Nurse will work closely with doctors and other healthcare professionals to ensure comprehensive patient care.',
-                'responsibilities' => [
-                    'Provide direct nursing care to patients, including administering medications and treatments.',
-                    'Monitor patients\' vital signs and overall health status.',
-                    'Assist doctors with medical procedures and examinations.',
-                    'Educate patients and their families on health maintenance and disease prevention.',
-                    'Maintain accurate and up-to-date patient records.',
-                    'Collaborate with other healthcare professionals to develop and implement care plans.',
-                    'Ensure a safe and clean environment for patients.',
-                    'Stay informed about the latest nursing practices and advancements in healthcare.',
-                ],
-                'qualifications' => [
-                    'Nursing degree from an accredited institution.',
-                    'Valid nursing license to practice in the Philippines.',
-                    'Proven experience as a Registered Nurse or in a similar role.',
-                    'Strong knowledge of nursing procedures, treatments, and protocols.',
-                    'Excellent communication and interpersonal skills.',
-                    'Ability to work effectively in a team-oriented environment.',
-                    'Compassionate and patient-focused approach to care.',
-                ],
-            ],
-            (object) [
-                'id' => 3,
-                'img' => 'assets/careers-img1.png',
-                'title' => 'Registered Nurse (RN)',
-                'location' => 'Makati, Metro Manila',
-                'type' => 'Part-time',
-                'date' => '2024-10-01',
-                'vacancy' => 4,
-                'description' => 'We are looking for a skilled and compassionate Registered Nurse to join our healthcare team. The ideal candidate will be responsible for providing high-quality nursing care to patients, assisting with medical procedures, and promoting overall health and wellness. The Registered Nurse will work closely with doctors and other healthcare professionals to ensure comprehensive patient care.',
-                'responsibilities' => [
-                    'Provide direct nursing care to patients, including administering medications and treatments.',
-                    'Monitor patients\' vital signs and overall health status.',
-                    'Assist doctors with medical procedures and examinations.',
-                    'Educate patients and their families on health maintenance and disease prevention.',
-                    'Maintain accurate and up-to-date patient records.',
-                    'Collaborate with other healthcare professionals to develop and implement care plans.',
-                    'Ensure a safe and clean environment for patients.',
-                    'Stay informed about the latest nursing practices and advancements in healthcare.',
-                ],
-                'qualifications' => [
-                    'Nursing degree from an accredited institution.',
-                    'Valid nursing license to practice in the Philippines.',
-                    'Proven experience as a Registered Nurse or in a similar role.',
-                    'Strong knowledge of nursing procedures, treatments, and protocols.',
-                    'Excellent communication and interpersonal skills.',
-                    'Ability to work effectively in a team-oriented environment.',
-                    'Compassionate and patient-focused approach to care.',
-                ],
-            ],
-            (object) [
-                'id' => 4,
-                'img' => 'assets/careers-img1.png',
-                'title' => 'Registered Nurse (RN)',
-                'location' => 'Makati, Metro Manila',
-                'type' => 'Part-time',
-                'date' => '2024-10-01',
-                'vacancy' => 4,
-                'description' => 'We are looking for a skilled and compassionate Registered Nurse to join our healthcare team. The ideal candidate will be responsible for providing high-quality nursing care to patients, assisting with medical procedures, and promoting overall health and wellness. The Registered Nurse will work closely with doctors and other healthcare professionals to ensure comprehensive patient care.',
-                'responsibilities' => [
-                    'Provide direct nursing care to patients, including administering medications and treatments.',
-                    'Monitor patients\' vital signs and overall health status.',
-                    'Assist doctors with medical procedures and examinations.',
-                    'Educate patients and their families on health maintenance and disease prevention.',
-                    'Maintain accurate and up-to-date patient records.',
-                    'Collaborate with other healthcare professionals to develop and implement care plans.',
-                    'Ensure a safe and clean environment for patients.',
-                    'Stay informed about the latest nursing practices and advancements in healthcare.',
-                ],
-                'qualifications' => [
-                    'Nursing degree from an accredited institution.',
-                    'Valid nursing license to practice in the Philippines.',
-                    'Proven experience as a Registered Nurse or in a similar role.',
-                    'Strong knowledge of nursing procedures, treatments, and protocols.',
-                    'Excellent communication and interpersonal skills.',
-                    'Ability to work effectively in a team-oriented environment.',
-                    'Compassionate and patient-focused approach to care.',
-                ],
-            ],
-            (object) [
-                'id' => 5,
-                'img' => 'assets/careers-img1.png',
-                'title' => 'Registered Nurse (RN)',
-                'location' => 'Makati, Metro Manila',
-                'type' => 'Part-time',
-                'date' => '2024-10-01',
-                'vacancy' => 4,
-                'description' => 'We are looking for a skilled and compassionate Registered Nurse to join our healthcare team. The ideal candidate will be responsible for providing high-quality nursing care to patients, assisting with medical procedures, and promoting overall health and wellness. The Registered Nurse will work closely with doctors and other healthcare professionals to ensure comprehensive patient care.',
-                'responsibilities' => [
-                    'Provide direct nursing care to patients, including administering medications and treatments.',
-                    'Monitor patients\' vital signs and overall health status.',
-                    'Assist doctors with medical procedures and examinations.',
-                    'Educate patients and their families on health maintenance and disease prevention.',
-                    'Maintain accurate and up-to-date patient records.',
-                    'Collaborate with other healthcare professionals to develop and implement care plans.',
-                    'Ensure a safe and clean environment for patients.',
-                    'Stay informed about the latest nursing practices and advancements in healthcare.',
-                ],
-                'qualifications' => [
-                    'Nursing degree from an accredited institution.',
-                    'Valid nursing license to practice in the Philippines.',
-                    'Proven experience as a Registered Nurse or in a similar role.',
-                    'Strong knowledge of nursing procedures, treatments, and protocols.',
-                    'Excellent communication and interpersonal skills.',
-                    'Ability to work effectively in a team-oriented environment.',
-                    'Compassionate and patient-focused approach to care.',
-                ],
-            ],
-            (object) [
-                'id' => 6,
-                'img' => 'assets/careers-img1.png',
-                'title' => 'Registered Nurse (RN)',
-                'location' => 'Makati, Metro Manila',
-                'type' => 'Part-time',
-                'date' => '2024-10-01',
-                'vacancy' => 4,
-                'description' => 'We are looking for a skilled and compassionate Registered Nurse to join our healthcare team. The ideal candidate will be responsible for providing high-quality nursing care to patients, assisting with medical procedures, and promoting overall health and wellness. The Registered Nurse will work closely with doctors and other healthcare professionals to ensure comprehensive patient care.',
-                'responsibilities' => [
-                    'Provide direct nursing care to patients, including administering medications and treatments.',
-                    'Monitor patients\' vital signs and overall health status.',
-                    'Assist doctors with medical procedures and examinations.',
-                    'Educate patients and their families on health maintenance and disease prevention.',
-                    'Maintain accurate and up-to-date patient records.',
-                    'Collaborate with other healthcare professionals to develop and implement care plans.',
-                    'Ensure a safe and clean environment for patients.',
-                    'Stay informed about the latest nursing practices and advancements in healthcare.',
-                ],
-                'qualifications' => [
-                    'Nursing degree from an accredited institution.',
-                    'Valid nursing license to practice in the Philippines.',
-                    'Proven experience as a Registered Nurse or in a similar role.',
-                    'Strong knowledge of nursing procedures, treatments, and protocols.',
-                    'Excellent communication and interpersonal skills.',
-                    'Ability to work effectively in a team-oriented environment.',
-                    'Compassionate and patient-focused approach to care.',
-                ],
-            ],
-            (object) [
-                'id' => 7,
-                'img' => 'assets/careers-img1.png',
-                'title' => 'Registered Nurse (RN)',
-                'location' => 'Makati, Metro Manila',
-                'type' => 'Part-time',
-                'date' => '2024-10-01',
-                'vacancy' => 4,
-                'description' => 'We are looking for a skilled and compassionate Registered Nurse to join our healthcare team. The ideal candidate will be responsible for providing high-quality nursing care to patients, assisting with medical procedures, and promoting overall health and wellness. The Registered Nurse will work closely with doctors and other healthcare professionals to ensure comprehensive patient care.',
-                'responsibilities' => [
-                    'Provide direct nursing care to patients, including administering medications and treatments.',
-                    'Monitor patients\' vital signs and overall health status.',
-                    'Assist doctors with medical procedures and examinations.',
-                    'Educate patients and their families on health maintenance and disease prevention.',
-                    'Maintain accurate and up-to-date patient records.',
-                    'Collaborate with other healthcare professionals to develop and implement care plans.',
-                    'Ensure a safe and clean environment for patients.',
-                    'Stay informed about the latest nursing practices and advancements in healthcare.',
-                ],
-                'qualifications' => [
-                    'Nursing degree from an accredited institution.',
-                    'Valid nursing license to practice in the Philippines.',
-                    'Proven experience as a Registered Nurse or in a similar role.',
-                    'Strong knowledge of nursing procedures, treatments, and protocols.',
-                    'Excellent communication and interpersonal skills.',
-                    'Ability to work effectively in a team-oriented environment.',
-                    'Compassionate and patient-focused approach to care.',
-                ],
-            ],
-            (object) [
-                'id' => 8,
-                'img' => 'assets/careers-img1.png',
-                'title' => 'Registered Nurse (RN)',
-                'location' => 'Makati, Metro Manila',
-                'type' => 'Part-time',
-                'date' => '2024-10-01',
-                'vacancy' => 4,
-                'description' => 'We are looking for a skilled and compassionate Registered Nurse to join our healthcare team. The ideal candidate will be responsible for providing high-quality nursing care to patients, assisting with medical procedures, and promoting overall health and wellness. The Registered Nurse will work closely with doctors and other healthcare professionals to ensure comprehensive patient care.',
-                'responsibilities' => [
-                    'Provide direct nursing care to patients, including administering medications and treatments.',
-                    'Monitor patients\' vital signs and overall health status.',
-                    'Assist doctors with medical procedures and examinations.',
-                    'Educate patients and their families on health maintenance and disease prevention.',
-                    'Maintain accurate and up-to-date patient records.',
-                    'Collaborate with other healthcare professionals to develop and implement care plans.',
-                    'Ensure a safe and clean environment for patients.',
-                    'Stay informed about the latest nursing practices and advancements in healthcare.',
-                ],
-                'qualifications' => [
-                    'Nursing degree from an accredited institution.',
-                    'Valid nursing license to practice in the Philippines.',
-                    'Proven experience as a Registered Nurse or in a similar role.',
-                    'Strong knowledge of nursing procedures, treatments, and protocols.',
-                    'Excellent communication and interpersonal skills.',
-                    'Ability to work effectively in a team-oriented environment.',
-                    'Compassionate and patient-focused approach to care.',
-                ],
-            ],
-            (object) [
-                'id' => 9,
-                'img' => 'assets/careers-img1.png',
-                'title' => 'Registered Nurse (RN)',
-                'location' => 'Makati, Metro Manila',
-                'type' => 'Part-time',
-                'date' => '2024-10-01',
-                'vacancy' => 4,
-                'description' => 'We are looking for a skilled and compassionate Registered Nurse to join our healthcare team. The ideal candidate will be responsible for providing high-quality nursing care to patients, assisting with medical procedures, and promoting overall health and wellness. The Registered Nurse will work closely with doctors and other healthcare professionals to ensure comprehensive patient care.',
-                'responsibilities' => [
-                    'Provide direct nursing care to patients, including administering medications and treatments.',
-                    'Monitor patients\' vital signs and overall health status.',
-                    'Assist doctors with medical procedures and examinations.',
-                    'Educate patients and their families on health maintenance and disease prevention.',
-                    'Maintain accurate and up-to-date patient records.',
-                    'Collaborate with other healthcare professionals to develop and implement care plans.',
-                    'Ensure a safe and clean environment for patients.',
-                    'Stay informed about the latest nursing practices and advancements in healthcare.',
-                ],
-                'qualifications' => [
-                    'Nursing degree from an accredited institution.',
-                    'Valid nursing license to practice in the Philippines.',
-                    'Proven experience as a Registered Nurse or in a similar role.',
-                    'Strong knowledge of nursing procedures, treatments, and protocols.',
-                    'Excellent communication and interpersonal skills.',
-                    'Ability to work effectively in a team-oriented environment.',
-                    'Compassionate and patient-focused approach to care.',
-                ],
-            ],
-            (object) [
-                'id' => 10,
-                'img' => 'assets/careers-img1.png',
-                'title' => 'Registered Nurse (RN)',
-                'location' => 'Makati, Metro Manila',
-                'type' => 'Part-time',
-                'date' => '2024-10-01',
-                'vacancy' => 4,
-                'description' => 'We are looking for a skilled and compassionate Registered Nurse to join our healthcare team. The ideal candidate will be responsible for providing high-quality nursing care to patients, assisting with medical procedures, and promoting overall health and wellness. The Registered Nurse will work closely with doctors and other healthcare professionals to ensure comprehensive patient care.',
-                'responsibilities' => [
-                    'Provide direct nursing care to patients, including administering medications and treatments.',
-                    'Monitor patients\' vital signs and overall health status.',
-                    'Assist doctors with medical procedures and examinations.',
-                    'Educate patients and their families on health maintenance and disease prevention.',
-                    'Maintain accurate and up-to-date patient records.',
-                    'Collaborate with other healthcare professionals to develop and implement care plans.',
-                    'Ensure a safe and clean environment for patients.',
-                    'Stay informed about the latest nursing practices and advancements in healthcare.',
-                ],
-                'qualifications' => [
-                    'Nursing degree from an accredited institution.',
-                    'Valid nursing license to practice in the Philippines.',
-                    'Proven experience as a Registered Nurse or in a similar role.',
-                    'Strong knowledge of nursing procedures, treatments, and protocols.',
-                    'Excellent communication and interpersonal skills.',
-                    'Ability to work effectively in a team-oriented environment.',
-                    'Compassionate and patient-focused approach to care.',
-                ],
-            ],
-            (object) [
-                'id' => 11,
-                'img' => 'assets/careers-img1.png',
-                'title' => 'Registered Nurse (RN)',
-                'location' => 'Makati, Metro Manila',
-                'type' => 'Part-time',
-                'date' => '2024-10-01',
-                'vacancy' => 4,
-                'description' => 'We are looking for a skilled and compassionate Registered Nurse to join our healthcare team. The ideal candidate will be responsible for providing high-quality nursing care to patients, assisting with medical procedures, and promoting overall health and wellness. The Registered Nurse will work closely with doctors and other healthcare professionals to ensure comprehensive patient care.',
-                'responsibilities' => [
-                    'Provide direct nursing care to patients, including administering medications and treatments.',
-                    'Monitor patients\' vital signs and overall health status.',
-                    'Assist doctors with medical procedures and examinations.',
-                    'Educate patients and their families on health maintenance and disease prevention.',
-                    'Maintain accurate and up-to-date patient records.',
-                    'Collaborate with other healthcare professionals to develop and implement care plans.',
-                    'Ensure a safe and clean environment for patients.',
-                    'Stay informed about the latest nursing practices and advancements in healthcare.',
-                ],
-                'qualifications' => [
-                    'Nursing degree from an accredited institution.',
-                    'Valid nursing license to practice in the Philippines.',
-                    'Proven experience as a Registered Nurse or in a similar role.',
-                    'Strong knowledge of nursing procedures, treatments, and protocols.',
-                    'Excellent communication and interpersonal skills.',
-                    'Ability to work effectively in a team-oriented environment.',
-                    'Compassionate and patient-focused approach to care.',
-                ],
-            ],
-            (object) [
-                'id' => 12,
-                'img' => 'assets/careers-img1.png',
-                'title' => 'Registered Nurse (RN)',
-                'location' => 'Makati, Metro Manila',
-                'type' => 'Part-time',
-                'date' => '2024-10-01',
-                'vacancy' => 4,
-                'description' => 'We are looking for a skilled and compassionate Registered Nurse to join our healthcare team. The ideal candidate will be responsible for providing high-quality nursing care to patients, assisting with medical procedures, and promoting overall health and wellness. The Registered Nurse will work closely with doctors and other healthcare professionals to ensure comprehensive patient care.',
-                'responsibilities' => [
-                    'Provide direct nursing care to patients, including administering medications and treatments.',
-                    'Monitor patients\' vital signs and overall health status.',
-                    'Assist doctors with medical procedures and examinations.',
-                    'Educate patients and their families on health maintenance and disease prevention.',
-                    'Maintain accurate and up-to-date patient records.',
-                    'Collaborate with other healthcare professionals to develop and implement care plans.',
-                    'Ensure a safe and clean environment for patients.',
-                    'Stay informed about the latest nursing practices and advancements in healthcare.',
-                ],
-                'qualifications' => [
-                    'Nursing degree from an accredited institution.',
-                    'Valid nursing license to practice in the Philippines.',
-                    'Proven experience as a Registered Nurse or in a similar role.',
-                    'Strong knowledge of nursing procedures, treatments, and protocols.',
-                    'Excellent communication and interpersonal skills.',
-                    'Ability to work effectively in a team-oriented environment.',
-                    'Compassionate and patient-focused approach to care.',
-                ],
-            ],
-        ];
+        // Fetch careers with their image, file, qualifications, and responsibilities
+        $careers = Careers::with(['image.file', 'qualifications', 'responsibilities'])
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-
-
+        // Add computed monthsAgo (for display like before)
         foreach ($careers as $career) {
-            $postedDate = Carbon::parse($career->date);
-            $career->monthsAgo = $postedDate->diffInMonths(Carbon::now());
+            $career->monthsAgo = Carbon::parse($career->created_at)->diffInMonths(Carbon::now());
         }
 
-        $careers_count = count($careers);
+        $careers_count = $careers->count();
 
         return view('pages.careers', compact('careers', 'careers_count'));
     }
@@ -1002,74 +664,37 @@ class PageController extends Controller
 
     public function find_a_doctor()
     {
+        // ✅ Fetch doctors with their related info
+        $doctors = Doctors::with([
+            'languages',
+            'specializations',
+        ])->get();
 
-        $doctors = [
-            (object) [
-                'id' => 1,
-                'name' => 'Charles Cuizon',
-                'gender' => 'Male',
-                'language' => 'Bisaya',
-                'specialization' => 'Consultant Pediatrician',
-                'subSpecialization' => '',
-            ],
-            (object) [
-                'id' => 2,
-                'name' => 'Lorem Ipsum',
-                'gender' => 'Female',
-                'language' => 'Bisaya',
-                'specialization' => 'Cardiologist',
-                'subSpecialization' => '',
-            ],
-        ];
 
         return view('pages.find-a-doctor', compact('doctors'));
     }
 
+
     public function show_doctor($id)
     {
-        $doctors = [
-            (object) [
-                'id' => 1,
-                'name' => 'Dr. Charles Cuizon',
-                'gender' => 'Male',
-                'language' => 'Bisaya',
-                'specialization' => 'Consultant Pediatrician',
-                'subSpecialization' => '',
-            ],
-            (object) [
-                'id' => 2,
-                'name' => 'Dr. Lorem Ipsum',
-                'gender' => 'Female',
-                'language' => 'Bisaya',
-                'specialization' => 'Cardiologist',
-                'subSpecialization' => '',
-            ],
-            (object) [
-                'id' => 3,
-                'name' => 'Dr. Atlas Fox',
-                'gender' => 'Female',
-                'language' => 'Bisaya',
-                'specialization' => 'Consultant Pediatrician',
-                'subSpecialization' => '',
-            ],
-            (object) [
-                'id' => 4,
-                'name' => 'Dr. Jugger Naut',
-                'gender' => 'Male',
-                'language' => 'Bisaya',
-                'specialization' => 'Cardiologist',
-                'subSpecialization' => '',
-            ],
-        ];
+        $doctor = Doctors::with(['specializations', 'languages'])->findOrFail($id);
 
-        $doctor = collect($doctors)->where('id', $id)->first();
-        $doctor_count = collect($doctors)->where('id', $id)->count();
+        $primaryType = $doctor->specializations->first()->pivot->type ?? 'Primary';
 
-        $related_doctors = collect($doctors)->where('specialization', $doctor->specialization)->where('id', '!=', $id)->all();
-        $related_doctors_count = collect($doctors)->where('specialization', $doctor->specialization)->where('id', '!=', $id)->count();
+        $related_doctors = Doctors::whereHas('specializations', function ($q) use ($doctor, $primaryType) {
+            $q->whereIn('specializations.id', $doctor->specializations->pluck('id'))
+                ->where('doctor_specializations.type', $primaryType);
+        })->where('id', '!=', $doctor->id)
+            ->with(['specializations', 'languages'])
+            ->get();
 
-        return view('pages.find-a-doctor-singlepage', compact('doctor', 'doctor_count', 'related_doctors_count', 'related_doctors'));
+        // Add this line to pass $doctor_count
+        $doctor_count = 1;
+        $related_doctors_count = $related_doctors->count();
+
+        return view('pages.find-a-doctor-singlepage', compact('doctor', 'doctor_count', 'related_doctors', 'related_doctors_count'));
     }
+
 
     public function doctor_details($id)
     {
@@ -1139,180 +764,35 @@ class PageController extends Controller
 
     public function news_and_events()
     {
-        $news = [
-            (object) [
-                'id' => 1,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img1.png',
-                'title' => 'Prime Doctors Medical Center Launches New Telemedicine Services',
-                'date' => '2023-09-10',
-                'excerpt' => 'Prime Doctors Medical Center is excited to announce the launch of our new telemedicine services, allowing patients to consult with our healthcare professionals from the comfort of their own homes.',
-            ],
-            (object) [
-                'id' => 2,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img2.png',
-                'title' => 'Health Tips for the Flu Season',
-                'date' => '2023-10-05',
-                'excerpt' => 'As the flu season approaches, it\'s important to take preventive measures to protect yourself and your loved ones. Here are some essential health tips to keep in mind.',
-            ],
-            (object) [
-                'id' => 3,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img2.png',
-                'title' => 'Health Tips for the Flu Season',
-                'date' => '2023-10-05',
-                'excerpt' => 'As the flu season approaches, it\'s important to take preventive measures to protect yourself and your loved ones. Here are some essential health tips to keep in mind.',
-            ],
-            (object) [
-                'id' => 4,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img2.png',
-                'title' => 'Health Tips for the Flu Season',
-                'date' => '2023-10-05',
-                'excerpt' => 'As the flu season approaches, it\'s important to take preventive measures to protect yourself and your loved ones. Here are some essential health tips to keep in mind.',
-            ],
-            (object) [
-                'id' => 5,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img2.png',
-                'title' => 'Health Tips for the Flu Season',
-                'date' => '2023-10-05',
-                'excerpt' => 'As the flu season approaches, it\'s important to take preventive measures to protect yourself and your loved ones. Here are some essential health tips to keep in mind.',
-            ],
-            (object) [
-                'id' => 6,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img2.png',
-                'title' => 'Health Tips for the Flu Season',
-                'date' => '2023-10-05',
-                'excerpt' => 'As the flu season approaches, it\'s important to take preventive measures to protect yourself and your loved ones. Here are some essential health tips to keep in mind.',
-            ],
-            (object) [
-                'id' => 7,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img2.png',
-                'title' => 'Health Tips for the Flu Season',
-                'date' => '2023-10-05',
-                'excerpt' => 'As the flu season approaches, it\'s important to take preventive measures to protect yourself and your loved ones. Here are some essential health tips to keep in mind.',
-            ],
-            (object) [
-                'id' => 8,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img2.png',
-                'title' => 'Health Tips for the Flu Season',
-                'date' => '2023-10-05',
-                'excerpt' => 'As the flu season approaches, it\'s important to take preventive measures to protect yourself and your loved ones. Here are some essential health tips to keep in mind.',
-            ],
-            (object) [
-                'id' => 9,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img2.png',
-                'title' => 'Health Tips for the Flu Season',
-                'date' => '2023-10-05',
-                'excerpt' => 'As the flu season approaches, it\'s important to take preventive measures to protect yourself and your loved ones. Here are some essential health tips to keep in mind.',
-            ],
-        ];
+        // Fetch the 'News' and 'Events' categories
+        $categories = BlogCategories::whereIn('category_name', ['News', 'Events'])->pluck('id', 'category_name');
 
+        // Fetch blogs for these categories, latest first
+        $news = Blogs::with('category', 'image.file')
+            ->whereIn('category_id', $categories)
+            ->orderBy('blog_date', 'desc')
+            ->get();
 
         return view('pages.news-and-events', compact('news'));
     }
 
+
     public function show_news($id)
     {
-        $all_news = [
-            (object) [
-                'id' => 1,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img1.png',
-                'title' => 'Prime Doctors Medical Center Launches New Telemedicine Services',
-                'date' => '2023-09-10',
-                'excerpt' => 'Prime Doctors Medical Center introduces telemedicine consultations, offering patients access to quality healthcare without leaving their homes.',
-            ],
-            (object) [
-                'id' => 2,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img2.png',
-                'title' => 'Community Blood Donation Drive Exceeds Expectations',
-                'date' => '2023-09-25',
-                'excerpt' => 'The recent community blood donation event successfully gathered over 150 donors, providing critical blood supply to local hospitals.',
-            ],
-            (object) [
-                'id' => 3,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img3.png',
-                'title' => 'New Diagnostic Center Opens in Cebu City',
-                'date' => '2023-10-05',
-                'excerpt' => 'Prime Doctors Medical Center expands its facilities with a new diagnostic center, offering advanced imaging and laboratory services.',
-            ],
-            (object) [
-                'id' => 4,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img4.png',
-                'title' => 'Wellness Seminar Promotes Healthy Living Habits',
-                'date' => '2023-10-15',
-                'excerpt' => 'Employees and patients joined the hospital’s wellness seminar focusing on mental health, nutrition, and exercise routines.',
-            ],
-            (object) [
-                'id' => 5,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img5.png',
-                'title' => 'Doctors Celebrate Medical Professionals Day 2023',
-                'date' => '2023-10-28',
-                'excerpt' => 'Prime Doctors Medical Center honors its dedicated healthcare professionals with a day of recognition and celebration.',
-            ],
-            (object) [
-                'id' => 6,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img6.png',
-                'title' => 'Hospital Implements Eco-Friendly Waste Management',
-                'date' => '2023-11-03',
-                'excerpt' => 'The medical center adopts a new waste segregation program to promote sustainability and reduce environmental impact.',
-            ],
-            (object) [
-                'id' => 7,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img7.png',
-                'title' => 'Free Health Check-Up for Senior Citizens Announced',
-                'date' => '2023-11-18',
-                'excerpt' => 'Prime Doctors Medical Center offers free annual check-ups for senior citizens as part of its community outreach initiative.',
-            ],
-            (object) [
-                'id' => 8,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img8.png',
-                'title' => 'Emergency Department Upgrades Equipment',
-                'date' => '2023-11-28',
-                'excerpt' => 'The hospital’s emergency department now features upgraded life-saving equipment to improve response time and patient outcomes.',
-            ],
-            (object) [
-                'id' => 9,
-                'thumbnail_image_id' => null,
-                'img' => 'assets/news-img9.png',
-                'title' => 'Christmas Charity Program Brings Smiles to Children',
-                'date' => '2023-12-15',
-                'excerpt' => 'Staff and volunteers of Prime Doctors Medical Center visited local communities to distribute gifts and host a children’s Christmas party.',
-            ],
-        ];
+        // Get the blog by ID with category and image-file relationship
+        $news = Blogs::with(['category', 'image.file'])
+            ->findOrFail($id);
 
-
-
-        $collection = collect($all_news);
-
-        $news = $collection->where('id', $id)->first();
-
-
-        $latest_news = $collection
+        // Get 3 latest blogs excluding current
+        $latest_news = Blogs::with(['image.file'])
             ->where('id', '!=', $id)
-            ->sortByDesc('date')
-            ->take(3);
-
-        if (!$news) {
-            abort(404);
-        }
+            ->orderByDesc('blog_date')
+            ->take(3)
+            ->get();
 
         return view('pages.news-and-event-singlepage', compact('news', 'latest_news'));
     }
+
 
     public function contact_us()
     {

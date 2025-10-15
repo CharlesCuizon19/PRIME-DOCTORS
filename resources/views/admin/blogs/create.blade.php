@@ -55,19 +55,24 @@
                     Category <span class="text-red-500">*</span>
                 </label>
                 <select name="category_name" id="category_name"
-                    class="block w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#FBD55B] focus:border-[#FBD55B]" required>
+                    class="block w-full border border-gray-300 rounded-lg px-4 py-2.5
+        focus:ring-2 focus:ring-[#FBD55B] focus:border-[#FBD55B]" required>
                     <option value="">-- Select Category --</option>
-                    @foreach($blogcategories as $category)
-                    <option value="{{ $category->category_name }}"
-                        {{ old('category_name') == $category->category_name ? 'selected' : '' }}>
-                        {{ $category->category_name }}
+                    <option value="News"
+                        {{ old('category_name', $blog->category_name ?? 'News') == 'News' ? 'selected' : '' }}>
+                        News
                     </option>
-                    @endforeach
+                    <option value="Events"
+                        {{ old('category_name', $blog->category_name ?? 'News') == 'Events' ? 'selected' : '' }}>
+                        Events
+                    </option>
                 </select>
                 @error('category_name')
                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
+
+
 
             {{-- Blog Date --}}
             <div>

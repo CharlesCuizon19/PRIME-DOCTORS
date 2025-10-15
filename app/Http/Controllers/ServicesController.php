@@ -8,6 +8,7 @@ use App\Models\Images;
 use App\Models\Files;
 use App\Models\Inclusions;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ServicesController extends Controller
@@ -136,54 +137,45 @@ class ServicesController extends Controller
             'inclusions.*' => 'exists:inclusions,id',
         ]);
 
+        DB::beginTransaction();
+
         try {
-            // 🖼 Replace service image if uploaded
+            $oldServiceImage = $service->service_image_id;
+            $oldIconImage = $service->icon_image_id;
+
+            // 🖼 Upload new service image first (don't delete old yet)
             if ($request->hasFile('service_image')) {
                 $file = $request->file('service_image');
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('storage/services'), $filename);
 
-                // Delete old image if exists
-                if ($service->service_image_id && $service->image && $service->image->file) {
-                    $oldPath = public_path('storage/' . $service->image->file->image_path);
-                    if (file_exists($oldPath)) unlink($oldPath);
-                    $service->image->file->delete();
-                    $service->image->delete();
-                }
-
                 $fileRecord = Files::create(['image_path' => 'services/' . $filename]);
-                $image = Images::create([
+                $newImage = Images::create([
                     'file_id' => $fileRecord->id,
                     'uploaded_by_id' => auth()->id(),
                     'alt_text' => $request->title . ' Image',
                 ]);
-                $service->service_image_id = $image->id;
+
+                $service->service_image_id = $newImage->id;
             }
 
-            // 🧩 Replace icon image if uploaded
+            // 🧩 Upload new icon image first (don't delete old yet)
             if ($request->hasFile('icon_image')) {
                 $file = $request->file('icon_image');
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('storage/services/icons'), $filename);
 
-                // Delete old icon if exists
-                if ($service->icon_image_id && $service->icon && $service->icon->file) {
-                    $oldPath = public_path('storage/' . $service->icon->file->image_path);
-                    if (file_exists($oldPath)) unlink($oldPath);
-                    $service->icon->file->delete();
-                    $service->icon->delete();
-                }
-
                 $fileRecord = Files::create(['image_path' => 'services/icons/' . $filename]);
-                $image = Images::create([
+                $newIcon = Images::create([
                     'file_id' => $fileRecord->id,
                     'uploaded_by_id' => auth()->id(),
                     'alt_text' => $request->title . ' Icon',
                 ]);
-                $service->icon_image_id = $image->id;
+
+                $service->icon_image_id = $newIcon->id;
             }
 
-            // ✏️ Update base fields
+            // ✏️ Update service data safely
             $service->update([
                 'title' => $validated['title'],
                 'description' => $validated['description'],
@@ -192,22 +184,36 @@ class ServicesController extends Controller
                 'icon_image_id' => $service->icon_image_id,
             ]);
 
-            // ✅ Sync (update) related Benefits
-            if (!empty($request->benefits)) {
-                $service->benefits()->sync($request->benefits);
-            } else {
-                $service->benefits()->detach();
+            // ✅ Sync relations
+            $service->benefits()->sync($request->benefits ?? []);
+            $service->inclusions()->sync($request->inclusions ?? []);
+
+            // 🧹 After successful update, delete old files (if replaced)
+            if ($request->hasFile('service_image') && $oldServiceImage && $service->service_image_id != $oldServiceImage) {
+                $old = Images::find($oldServiceImage);
+                if ($old && $old->file) {
+                    $path = public_path('storage/' . $old->file->image_path);
+                    if (file_exists($path)) unlink($path);
+                    $old->file->delete();
+                }
+                $old?->delete();
             }
 
-            // ✅ Sync (update) related Inclusions
-            if (!empty($request->inclusions)) {
-                $service->inclusions()->sync($request->inclusions);
-            } else {
-                $service->inclusions()->detach();
+            if ($request->hasFile('icon_image') && $oldIconImage && $service->icon_image_id != $oldIconImage) {
+                $old = Images::find($oldIconImage);
+                if ($old && $old->file) {
+                    $path = public_path('storage/' . $old->file->image_path);
+                    if (file_exists($path)) unlink($path);
+                    $old->file->delete();
+                }
+                $old?->delete();
             }
+
+            DB::commit();
 
             return redirect()->route('admin.services.index')->with('success', 'Service updated successfully!');
         } catch (\Throwable $e) {
+            DB::rollBack();
             Log::error('Service update error: ' . $e->getMessage());
             return back()->withErrors('Failed to update service.');
         }

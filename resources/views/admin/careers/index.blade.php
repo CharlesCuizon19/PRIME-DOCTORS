@@ -75,7 +75,8 @@
                 {{-- Career Image --}}
                 <td class="px-6 py-3 text-center">
                     @if ($career->image && $career->image->file && $career->image->file->image_path)
-                    <img src="{{ asset($career->image->file->image_path) }}" alt="{{ $career->image->alt_text ?? 'Banner' }}"
+                    <img src="{{ asset('storage/' . $career->image->file->image_path) }}"
+                        alt="{{ $career->image->alt_text ?? 'Banner' }}"
                         class="mx-auto w-24 h-12 object-cover rounded shadow">
                     @else
                     <span class="text-gray-400 italic">No Image</span>

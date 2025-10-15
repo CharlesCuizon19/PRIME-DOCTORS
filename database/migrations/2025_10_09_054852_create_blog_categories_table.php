@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('blog_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('category_name')->nullable();
+            $table->enum('category_name', ['News', 'Events'])->default('News');
             $table->timestamps();
         });
     }

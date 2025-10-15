@@ -16,6 +16,6 @@ class Specializations extends Model
     // Relationships
     public function doctors()
     {
-        return $this->belongsToMany(Doctors::class, 'doctor_specialization', 'specialization_id', 'doctor_id')->withPivot('type');
+        return $this->belongsToMany(Doctors::class, 'doctor_specializations', 'specialization_id', 'doctor_id')->withPivot('type');
     }
 }

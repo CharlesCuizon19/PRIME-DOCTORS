@@ -109,7 +109,7 @@
 
                 <div id="service_image_preview_container" class="hidden mt-4">
                     <p class="font-semibold mb-2">Service Image Preview:</p>
-                    <div id="service_image_preview" class="relative inline-block rounded-lg overflow-hidden shadow-md"></div>
+                    <div id="service_image_preview" class="relative inline-block rounded-lg overflow-visible shadow-md"></div>
                 </div>
 
                 @error('service_image')
@@ -134,7 +134,7 @@
 
                 <div id="icon_image_preview_container" class="hidden mt-4">
                     <p class="font-semibold mb-2">Icon Image Preview:</p>
-                    <div id="icon_image_preview" class="relative inline-block rounded-lg overflow-hidden shadow-md"></div>
+                    <div id="icon_image_preview" class="relative inline-block rounded-lg overflow-visible shadow-md"></div>
                 </div>
 
                 @error('icon_image')

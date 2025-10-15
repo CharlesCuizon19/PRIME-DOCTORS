@@ -8,6 +8,7 @@ use App\Models\Responsibilities;
 use App\Models\Images;
 use App\Models\Files;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CareersController extends Controller
@@ -109,33 +110,28 @@ class CareersController extends Controller
             'responsibility_ids' => 'nullable|array',
         ]);
 
+        DB::beginTransaction();
+
         try {
-            // Replace career image if uploaded
+            $oldImageId = $career->career_image_id;
+
+            // 🖼 Upload new career image first (don’t delete old yet)
             if ($request->hasFile('career_image')) {
                 $file = $request->file('career_image');
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $file->move(public_path('storage/careers'), $filename);
 
-                // Delete old image if exists
-                if ($career->career_image_id && $career->image && $career->image->file) {
-                    $oldPath = public_path('storage/' . $career->image->file->image_path);
-                    if (file_exists($oldPath)) unlink($oldPath);
-
-                    $career->image->file->delete();
-                    $career->image->delete();
-                }
-
-                $fileRecord = Files::create(['image_path' => 'storage/careers/' . $filename]);
-                $image = Images::create([
+                $fileRecord = Files::create(['image_path' => 'careers/' . $filename]);
+                $newImage = Images::create([
                     'file_id' => $fileRecord->id,
                     'uploaded_by_id' => auth()->id(),
                     'alt_text' => $request->career_name . ' Image',
                 ]);
 
-                $career->career_image_id = $image->id;
+                $career->career_image_id = $newImage->id;
             }
 
-            // Update base fields
+            // ✏️ Update career record
             $career->update([
                 'career_name' => $request->career_name,
                 'job_type' => $request->job_type,
@@ -145,25 +141,31 @@ class CareersController extends Controller
                 'career_image_id' => $career->career_image_id,
             ]);
 
-            // Sync qualifications & responsibilities
-            if ($request->has('qualification_ids')) {
-                $career->qualifications()->sync($request->qualification_ids);
-            } else {
-                $career->qualifications()->detach();
-            }
+            // ✅ Sync relationships
+            $career->qualifications()->sync($request->qualification_ids ?? []);
+            $career->responsibilities()->sync($request->responsibility_ids ?? []);
 
-            if ($request->has('responsibility_ids')) {
-                $career->responsibilities()->sync($request->responsibility_ids);
-            } else {
-                $career->responsibilities()->detach();
+            DB::commit();
+
+            // 🧹 Delete old image only after successful update
+            if ($request->hasFile('career_image') && $oldImageId && $oldImageId != $career->career_image_id) {
+                $oldImage = Images::find($oldImageId);
+                if ($oldImage && $oldImage->file) {
+                    $path = public_path('storage/' . $oldImage->file->image_path);
+                    if (file_exists($path)) unlink($path);
+                    $oldImage->file->delete();
+                }
+                $oldImage?->delete();
             }
 
             return redirect()->route('admin.careers.index')->with('success', 'Career updated successfully!');
         } catch (\Throwable $e) {
+            DB::rollBack();
             Log::error('Career update error: ' . $e->getMessage());
             return back()->withErrors('Failed to update career.');
         }
     }
+
 
     public function destroy($id)
     {

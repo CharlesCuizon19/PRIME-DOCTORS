@@ -154,7 +154,7 @@
             {{-- ✅ Preview --}}
             <div id="preview-container" class="hidden mt-4">
                 <p class="font-semibold mb-2">Preview:</p>
-                <div id="preview" class="relative inline-block rounded-lg overflow-hidden shadow-md"></div>
+                <div id="preview" class="relative inline-block rounded-lg overflow-visible shadow-md"></div>
             </div>
 
             {{-- ✅ Buttons --}}

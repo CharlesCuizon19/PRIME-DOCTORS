@@ -86,8 +86,7 @@
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Select Qualifications</label>
                 <div id="qualifications-container" class="space-y-3">
-                    @if(old('qualification_ids', $career->qualifications->pluck('id')->toArray()))
-                    @foreach(old('qualification_ids', $career->qualifications->pluck('id')->toArray()) as $qualId)
+                    @forelse(old('qualification_ids', $career->qualifications->pluck('id')->toArray()) as $qualId)
                     <div class="flex gap-2">
                         <select name="qualification_ids[]" class="flex-1 border border-gray-300 rounded-lg px-4 py-2">
                             <option value="">-- Choose Qualification --</option>
@@ -97,10 +96,21 @@
                             </option>
                             @endforeach
                         </select>
-                        <button type="button" class="add-qualification px-3 py-2 bg-[#FBD55B] text-black font-semibold rounded-lg hover:bg-[#e4c14e] transition">+</button>
+                        <button type="button"
+                            class="add-qualification px-3 py-2 bg-[#FBD55B] text-black font-semibold rounded-lg hover:bg-[#e4c14e] transition">+</button>
                     </div>
-                    @endforeach
-                    @endif
+                    @empty
+                    <div class="flex gap-2">
+                        <select name="qualification_ids[]" class="flex-1 border border-gray-300 rounded-lg px-4 py-2">
+                            <option value="">-- Choose Qualification --</option>
+                            @foreach($qualifications as $qualification)
+                            <option value="{{ $qualification->id }}">{{ $qualification->qualification }}</option>
+                            @endforeach
+                        </select>
+                        <button type="button"
+                            class="add-qualification px-3 py-2 bg-[#FBD55B] text-black font-semibold rounded-lg hover:bg-[#e4c14e] transition">+</button>
+                    </div>
+                    @endforelse
                 </div>
             </div>
 
@@ -108,8 +118,7 @@
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Select Responsibilities</label>
                 <div id="responsibilities-container" class="space-y-3">
-                    @if(old('responsibility_ids', $career->responsibilities->pluck('id')->toArray()))
-                    @foreach(old('responsibility_ids', $career->responsibilities->pluck('id')->toArray()) as $respId)
+                    @forelse(old('responsibility_ids', $career->responsibilities->pluck('id')->toArray()) as $respId)
                     <div class="flex gap-2">
                         <select name="responsibility_ids[]" class="flex-1 border border-gray-300 rounded-lg px-4 py-2">
                             <option value="">-- Choose Responsibility --</option>
@@ -119,10 +128,21 @@
                             </option>
                             @endforeach
                         </select>
-                        <button type="button" class="add-responsibility px-3 py-2 bg-[#FBD55B] text-black font-semibold rounded-lg hover:bg-[#e4c14e] transition">+</button>
+                        <button type="button"
+                            class="add-responsibility px-3 py-2 bg-[#FBD55B] text-black font-semibold rounded-lg hover:bg-[#e4c14e] transition">+</button>
                     </div>
-                    @endforeach
-                    @endif
+                    @empty
+                    <div class="flex gap-2">
+                        <select name="responsibility_ids[]" class="flex-1 border border-gray-300 rounded-lg px-4 py-2">
+                            <option value="">-- Choose Responsibility --</option>
+                            @foreach($responsibilities as $responsibility)
+                            <option value="{{ $responsibility->id }}">{{ $responsibility->responsibility }}</option>
+                            @endforeach
+                        </select>
+                        <button type="button"
+                            class="add-responsibility px-3 py-2 bg-[#FBD55B] text-black font-semibold rounded-lg hover:bg-[#e4c14e] transition">+</button>
+                    </div>
+                    @endforelse
                 </div>
             </div>
 
@@ -130,6 +150,8 @@
             <div class="border-2 border-dashed rounded-xl p-8 text-center bg-gray-50 hover:bg-gray-100 transition relative">
                 <p class="font-semibold text-gray-700">Upload Career Image</p>
                 <p class="text-sm text-gray-500 mb-4">Accepted formats: JPG, PNG, WEBP — Max size: 2MB</p>
+
+                {{-- Upload Button --}}
                 <label for="career_image"
                     class="cursor-pointer inline-flex flex-col items-center bg-[#FBD55B] hover:bg-[#e4c14e] text-black font-semibold px-6 py-3 rounded-lg shadow transition">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-1" fill="none" viewBox="0 0 24 24"
@@ -141,15 +163,22 @@
                     <input type="file" name="career_image" id="career_image" class="hidden" accept="image/*">
                 </label>
 
-                <div id="career_image_preview_container" class="{{ $career->career_image_id ? '' : 'hidden' }} mt-4">
+                {{-- Preview --}}
+                <div id="career_image_preview_container" class="{{ $career->image ? '' : 'hidden' }} mt-4">
                     <p class="font-semibold mb-2">Career Image Preview:</p>
                     <div id="career_image_preview" class="relative inline-block rounded-lg overflow-hidden shadow-md">
-                        @if($career->career_image_id && $career->career_image)
-                        <img src="{{ asset('storage/' . $career->career_image->file->image_path) }}" class="w-full max-w-md h-auto rounded-lg shadow-lg object-cover">
+                        @if ($career->image && $career->image->file && $career->image->file->image_path)
+                        <img src="{{ asset('storage/' . $career->image->file->image_path) }}"
+                            onerror="this.src='{{ asset($career->image->file->image_path) }}'"
+                            class="w-full max-w-md mx-auto mb-4 rounded-lg shadow-lg">
+                        @else
+                        <p class="text-gray-500 italic">No image uploaded.</p>
                         @endif
                     </div>
                 </div>
 
+
+                {{-- Validation Error --}}
                 @error('career_image')
                 <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                 @enderror
@@ -174,43 +203,28 @@
     document.addEventListener('DOMContentLoaded', () => {
         ClassicEditor.create(document.querySelector('#overview')).catch(console.error);
 
-        // Qualifications add/remove
-        const qualificationsContainer = document.getElementById('qualifications-container');
-        qualificationsContainer.addEventListener('click', e => {
-            if (e.target.matches('.add-qualification')) {
-                const newRow = qualificationsContainer.firstElementChild.cloneNode(true);
-                newRow.querySelector('select').value = '';
-                const btn = newRow.querySelector('.add-qualification');
-                btn.textContent = '−';
-                btn.classList.remove('add-qualification', 'bg-[#FBD55B]');
-                btn.classList.add('remove-qualification', 'bg-red-500', 'hover:bg-red-600');
-                qualificationsContainer.appendChild(newRow);
-            }
-            if (e.target.matches('.remove-qualification')) {
-                const row = e.target.closest('div.flex');
-                if (qualificationsContainer.children.length > 1) row.remove();
-            }
-        });
+        const handleDynamicFields = (containerId, addClass, removeClass) => {
+            const container = document.getElementById(containerId);
+            container.addEventListener('click', e => {
+                if (e.target.matches(`.${addClass}`)) {
+                    const newRow = container.firstElementChild.cloneNode(true);
+                    newRow.querySelector('select').value = '';
+                    const btn = newRow.querySelector(`.${addClass}`);
+                    btn.textContent = '−';
+                    btn.classList.replace(addClass, removeClass);
+                    btn.classList.replace('bg-[#FBD55B]', 'bg-red-500');
+                    btn.classList.add('hover:bg-red-600');
+                    container.appendChild(newRow);
+                } else if (e.target.matches(`.${removeClass}`)) {
+                    if (container.children.length > 1) e.target.closest('div.flex').remove();
+                }
+            });
+        };
 
-        // Responsibilities add/remove
-        const responsibilitiesContainer = document.getElementById('responsibilities-container');
-        responsibilitiesContainer.addEventListener('click', e => {
-            if (e.target.matches('.add-responsibility')) {
-                const newRow = responsibilitiesContainer.firstElementChild.cloneNode(true);
-                newRow.querySelector('select').value = '';
-                const btn = newRow.querySelector('.add-responsibility');
-                btn.textContent = '−';
-                btn.classList.remove('add-responsibility', 'bg-[#FBD55B]');
-                btn.classList.add('remove-responsibility', 'bg-red-500', 'hover:bg-red-600');
-                responsibilitiesContainer.appendChild(newRow);
-            }
-            if (e.target.matches('.remove-responsibility')) {
-                const row = e.target.closest('div.flex');
-                if (responsibilitiesContainer.children.length > 1) row.remove();
-            }
-        });
+        handleDynamicFields('qualifications-container', 'add-qualification', 'remove-qualification');
+        handleDynamicFields('responsibilities-container', 'add-responsibility', 'remove-responsibility');
 
-        // Image preview
+        // Image Preview
         const previewSetup = (inputId, previewId, containerId) => {
             const input = document.getElementById(inputId);
             const previewContainer = document.getElementById(containerId);
@@ -223,11 +237,13 @@
                 const reader = new FileReader();
                 reader.onload = e => {
                     previewContainer.classList.remove('hidden');
-                    preview.innerHTML = `<img src="${e.target.result}" class="w-full max-w-md h-auto rounded-lg shadow-lg object-cover">
-                <button type="button" class="absolute -top-3 -right-3 bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-md hover:bg-red-700 transition">✖</button>`;
+                    preview.innerHTML = `
+                    <img src="${e.target.result}" class="w-full max-w-md h-auto rounded-lg shadow-lg object-cover">
+                    <button type="button" class="absolute -top-3 -right-3 bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-md hover:bg-red-700 transition">✖</button>`;
                     preview.querySelector('button').onclick = () => {
                         input.value = '';
                         previewContainer.classList.add('hidden');
+                        preview.innerHTML = '';
                     };
                 };
                 reader.readAsDataURL(file);

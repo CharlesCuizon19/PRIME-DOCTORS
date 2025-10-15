@@ -95,12 +95,9 @@ class BlogsController extends Controller
             'title' => 'required|string|max:255',
             'context' => 'required|string',
             'blog_date' => 'required|date',
-            'category_name' => 'required|string|max:255',
+            'category_id' => 'required|exists:blog_categories,id',
             'blog_image' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
-        // Check or create category
-        $category = BlogCategories::firstOrCreate(['category_name' => $validated['category_name']]);
 
         $blog_image_id = $blog->blog_image_id; // keep existing image by default
 
@@ -128,12 +125,13 @@ class BlogsController extends Controller
             'slug' => Str::slug($validated['title']),
             'context' => $validated['context'],
             'blog_date' => $validated['blog_date'],
-            'category_id' => $category->id,
+            'category_id' => $validated['category_id'], // use category_id like store
             'blog_image_id' => $blog_image_id, // new or existing image
         ]);
 
         return redirect()->route('admin.blogs.index')->with('success', 'Blog updated successfully');
     }
+
     /**
      * Delete a blog.
      */
