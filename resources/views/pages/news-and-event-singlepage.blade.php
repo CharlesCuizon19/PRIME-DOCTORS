@@ -13,8 +13,15 @@
         <div class="w-full lg:w-2/3">
             <!-- Featured Image -->
             <div class="w-full h-fit">
-                <img src="{{ asset($news->thumbnail_image_id ?? 'assets/post-details-img.png') }}" alt="Health Check-Up"
-                    class="object-contain w-full mb-6 rounded-2xl">
+                @if ($news->image && $news->image->file && $news->image->file->image_path)
+                <img src="{{ asset($news->image->file->image_path) }}"
+                    alt="{{ $news->image->alt_text ?? $news->title }}"
+                    class="object-cover w-full mb-6 rounded-2xl shadow-md">
+                @else
+                <img src="{{ asset('assets/post-details-img.png') }}"
+                    alt="Default News Image"
+                    class="object-cover w-full mb-6 rounded-2xl shadow-md opacity-80">
+                @endif
             </div>
 
             <!-- Meta Info -->

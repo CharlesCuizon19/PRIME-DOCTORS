@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banners;
 use App\Models\BlogCategories;
 use App\Models\Blogs;
 use App\Models\Careers;
@@ -13,177 +14,26 @@ class PageController extends Controller
 {
     public function home()
     {
-        $news = [
-            (object) [
-                'id' => 1,
-                'thumbnail_image_id' => 'assets/news-img1.png',
-                'title' => 'Prime Doctors Medical Center Launches New Telemedicine Services',
-                'date' => '2023-09-10',
-                'excerpt' => 'Prime Doctors Medical Center is excited to announce the launch of our new telemedicine services, allowing patients to consult with healthcare professionals from the comfort of their homes.',
-            ],
-            (object) [
-                'id' => 2,
-                'thumbnail_image_id' => 'assets/news-img2.png',
-                'title' => 'Health Tips for the Flu Season',
-                'date' => '2023-10-05',
-                'excerpt' => 'As the flu season approaches, it’s important to strengthen your immune system and stay protected with vaccines and good hygiene habits.',
-            ],
-            (object) [
-                'id' => 3,
-                'thumbnail_image_id' => 'assets/news-img3.png',
-                'title' => 'Prime Doctors Celebrates 20 Years of Service',
-                'date' => '2024-03-15',
-                'excerpt' => 'Our medical center proudly celebrates two decades of providing trusted healthcare to the community, with a renewed commitment to innovation and patient care.',
-            ],
-            (object) [
-                'id' => 4,
-                'thumbnail_image_id' => 'assets/news-img4.png',
-                'title' => 'New Cardiology Wing Opens at Prime Doctors Medical Center',
-                'date' => '2024-05-20',
-                'excerpt' => 'The new Cardiology Department features state-of-the-art diagnostic equipment and specialized cardiologists ready to serve patients with heart-related conditions.',
-            ],
-            (object) [
-                'id' => 5,
-                'thumbnail_image_id' => 'assets/news-img5.png',
-                'title' => 'Free Community Health Check-Up Program Announced',
-                'date' => '2024-06-12',
-                'excerpt' => 'Prime Doctors Medical Center invites everyone to join our free health check-up event aimed at promoting early detection and prevention of lifestyle diseases.',
-            ],
-            (object) [
-                'id' => 6,
-                'thumbnail_image_id' => 'assets/news-img6.png',
-                'title' => 'Prime Doctors Partners with Local Schools for Health Awareness',
-                'date' => '2024-07-05',
-                'excerpt' => 'We’ve launched a partnership with local schools to promote health education and awareness among students through interactive seminars and wellness activities.',
-            ],
-            (object) [
-                'id' => 7,
-                'thumbnail_image_id' => 'assets/news-img7.png',
-                'title' => 'Upgraded Emergency Department Now Open 24/7',
-                'date' => '2024-08-18',
-                'excerpt' => 'Our newly upgraded Emergency Department provides round-the-clock service with faster response times and advanced medical facilities.',
-            ],
-            (object) [
-                'id' => 8,
-                'thumbnail_image_id' => 'assets/news-img8.png',
-                'title' => 'Mental Health Awareness Month: Prime Doctors Leads the Way',
-                'date' => '2024-09-10',
-                'excerpt' => 'In celebration of Mental Health Awareness Month, our specialists are hosting workshops and free counseling sessions to promote emotional well-being.',
-            ],
-            (object) [
-                'id' => 9,
-                'thumbnail_image_id' => 'assets/news-img9.png',
-                'title' => 'New Pediatric Unit Welcomes Young Patients',
-                'date' => '2024-10-01',
-                'excerpt' => 'The newly opened Pediatric Unit offers a safe and friendly environment designed to make children feel comfortable while receiving quality medical care.',
-            ],
-        ];
+        // Fetch banners with images
+        $banners = Banners::with('image.file')->latest()->get();
 
-        $doctors = [
-            (object) [
-                'id' => 1,
-                'profile_img_id' => null,
-                'name' => 'Dr. Charles Cuizon',
-                'gender' => 'Male',
-                'language' => 'Bisaya',
-                'specialization' => 'Consultant Pediatrician',
-                'subSpecialization' => null,
-                'clinic_room_number' => 'Room 101, West Wing',
-                'phone_number' => '+63 912 345 6789',
-                'language' => 'English, Filipino, Bisaya',
-                'clinic_hours' => 'Monday to Friday: 9:00 AM - 5:00 PM',
-                'telephone' => '+1 (555) 123-4567',
-            ],
-            (object) [
-                'id' => 2,
-                'profile_img_id' => null,
-                'name' => 'Dr. Lorem Ipsum',
-                'gender' => 'Female',
-                'language' => 'Bisaya',
-                'specialization' => 'Cardiologist',
-                'subSpecialization' => null,
-                'clinic_room_number' => 'Room 101, West Wing',
-                'phone_number' => '+63 912 345 6789',
-                'language' => 'English, Filipino, Bisaya',
-                'clinic_hours' => 'Monday to Friday: 9:00 AM - 5:00 PM',
-                'telephone' => '+1 (555) 123-4567',
-            ],
-            (object) [
-                'id' => 3,
-                'profile_img_id' => null,
-                'name' => 'Dr. Atlas Fox',
-                'gender' => 'Female',
-                'language' => 'Bisaya',
-                'specialization' => 'Consultant Pediatrician',
-                'subSpecialization' => null,
-                'clinic_room_number' => 'Room 101, West Wing',
-                'phone_number' => '+63 912 345 6789',
-                'language' => 'English, Filipino, Bisaya',
-                'clinic_hours' => 'Monday to Friday: 9:00 AM - 5:00 PM',
-                'telephone' => '+1 (555) 123-4567',
-            ],
-            (object) [
-                'id' => 4,
-                'profile_img_id' => null,
-                'name' => 'Dr. Jugger Naut',
-                'gender' => 'Male',
-                'language' => 'Bisaya',
-                'specialization' => 'Cardiologist',
-                'subSpecialization' => null,
-                'clinic_room_number' => 'Room 101, West Wing',
-                'phone_number' => '+63 912 345 6789',
-                'language' => 'English, Filipino, Bisaya',
-                'clinic_hours' => 'Monday to Friday: 9:00 AM - 5:00 PM',
-                'telephone' => '+1 (555) 123-4567',
-            ],
-            (object) [
-                'id' => 4,
-                'profile_img_id' => null,
-                'name' => 'Dr. Jugger Naut',
-                'gender' => 'Male',
-                'language' => 'Bisaya',
-                'specialization' => 'Cardiologist',
-                'subSpecialization' => null,
-                'clinic_room_number' => 'Room 101, West Wing',
-                'phone_number' => '+63 912 345 6789',
-                'language' => 'English, Filipino, Bisaya',
-                'clinic_hours' => 'Monday to Friday: 9:00 AM - 5:00 PM',
-                'telephone' => '+1 (555) 123-4567',
-            ],
-            (object) [
-                'id' => 4,
-                'profile_img_id' => null,
-                'name' => 'Dr. Jugger Naut',
-                'gender' => 'Male',
-                'language' => 'Bisaya',
-                'specialization' => 'Cardiologist',
-                'subSpecialization' => null,
-                'clinic_room_number' => 'Room 101, West Wing',
-                'phone_number' => '+63 912 345 6789',
-                'language' => 'English, Filipino, Bisaya',
-                'clinic_hours' => 'Monday to Friday: 9:00 AM - 5:00 PM',
-                'telephone' => '+1 (555) 123-4567',
-            ],
-            (object) [
-                'id' => 4,
-                'profile_img_id' => null,
-                'name' => 'Dr. Jugger Naut',
-                'gender' => 'Male',
-                'language' => 'Bisaya',
-                'specialization' => 'Cardiologist',
-                'subSpecialization' => null,
-                'clinic_room_number' => 'Room 101, West Wing',
-                'phone_number' => '+63 912 345 6789',
-                'language' => 'English, Filipino, Bisaya',
-                'clinic_hours' => 'Monday to Friday: 9:00 AM - 5:00 PM',
-                'telephone' => '+1 (555) 123-4567',
-            ],
-        ];
+        // Fetch all services dynamically with icon, benefits, inclusions, and main image
+        $services = Services::with(['image.file', 'icon.file', 'benefits', 'inclusions'])
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-        $news = collect($news)->sortByDesc('date')->take(4);
+        // Fetch latest 4 news with images
+        $news = Blogs::with('image.file')->latest()->take(4)->get();
 
-        return view('pages.home', compact('news', 'doctors'));
+        // Fetch doctors dynamically with profile images and specializations
+        $doctors = Doctors::with(['image.file', 'specializations'])
+            ->orderBy('name')
+            ->get();
+
+        // Return to view with all data
+        return view('pages.home', compact('banners', 'services', 'news', 'doctors'));
     }
+
     public function about_us()
     {
         return view('pages.about-us');

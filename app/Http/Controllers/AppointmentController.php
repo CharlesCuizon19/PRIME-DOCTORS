@@ -49,6 +49,6 @@ class AppointmentController extends Controller
 
     public function export()
     {
-        return Excel::download(new AppointmentsExport, 'contacts.xlsx');
+        return Excel::download(new AppointmentsExport, 'appointments.xlsx');
     }
 }

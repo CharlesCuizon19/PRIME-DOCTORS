@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BannersController;
 use App\Http\Controllers\BenefitsController;
 use App\Http\Controllers\BlogsController;
+use App\Http\Controllers\ConsultationsController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\InclusionsController;
@@ -61,6 +62,7 @@ Route::post('/home/contact-us', [PageController::class, 'submit_contact_form'])-
 Route::post('/newsletter', [NewslettersController::class, 'store'])->name('newsletter.store');
 Route::post('/contact-us', [ContactsController::class, 'store'])->name('contacts.store');
 Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
+Route::post('/consultations', [ConsultationsController::class, 'store'])->name('consultations.store');
 
 //ADMIN PAGE
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
@@ -78,6 +80,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resource('contacts', ContactsController::class);
     Route::resource('blogs', BlogsController::class);
     Route::resource('appointments', AppointmentController::class);
+    Route::resource('consultations', ConsultationsController::class);
 
 
     Route::get('newsletter-export', [NewslettersController::class, 'export'])->name('newsletter.export');

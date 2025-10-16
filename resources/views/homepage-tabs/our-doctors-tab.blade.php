@@ -33,18 +33,24 @@
             <div class="overflow-hidden">
                 <div class="swiper doctors-swiper" data-aos="zoom-in" data-aos-duration="1000">
                     <div class="swiper-wrapper">
-                        @foreach ($doctors as $item)
-                            <div class="swiper-slide">
-                                <a href="{{ route('find-a-doctor.doctor-details', ['id' => $item->id]) }}"
-                                    class="flex flex-col justify-end w-full transition duration-300 bg-white border rounded-lg shadow-md hover:border-blue-700 bg-opacity-80">
-                                    <img src="{{ asset('assets/doctor-thumbnail.png') }}" alt=""
-                                        class="object-cover rounded-md">
-                                    <div class="p-4">
-                                        <h3 class="font-semibold text-blue-700">{{ $item->name }}</h3>
-                                        <p class="text-sm text-[#edb42f]">{{ $item->specialization }}</p>
-                                    </div>
-                                </a>
-                            </div>
+                        @foreach ($doctors as $doctor)
+                        @php
+                        $primarySpecialization = $doctor->specializations->firstWhere('pivot.type', 'Primary');
+                        @endphp
+                        <div class="swiper-slide">
+                            <a href="{{ route('find-a-doctor.doctor-details', ['id' => $doctor->id]) }}"
+                                class="flex flex-col justify-end w-full transition duration-300 bg-white border rounded-lg shadow-md hover:border-blue-700 bg-opacity-80">
+                                <img src="{{ asset($doctor->image->file->image_path ?? 'assets/doctor-thumbnail.png') }}"
+                                    alt="{{ $doctor->name }}"
+                                    class="object-cover rounded-md">
+                                <div class="p-4">
+                                    <h3 class="font-semibold text-blue-700">{{ $doctor->name }}</h3>
+                                    <p class="text-sm text-[#edb42f]">
+                                        {{ $primarySpecialization?->specialization_name ?? 'No Primary Specialization' }}
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
                         @endforeach
                     </div>
                 </div>
@@ -53,16 +59,14 @@
             <!-- Navigation -->
             <div class="flex justify-center w-auto gap-4 lg:w-full" data-aos="zoom-in" data-aos-duration="1000">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                    class="h-12 transition duration-300 cursor-pointer text-[#0035c6] hover:scale-110 prev-btn"
-                    data-swiper-action="prev">
+                    class="h-12 transition duration-300 cursor-pointer text-[#0035c6] hover:scale-110 prev-btn">
                     <g fill="none" stroke="currentColor" stroke-width="1">
                         <circle cx="12" cy="12" r="10" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16 12H8m0 0l3-3m-3 3l3 3" />
                     </g>
                 </svg>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                    class="h-12 transition duration-300 cursor-pointer text-[#0035c6] hover:scale-110 next-btn"
-                    data-swiper-action="next">
+                    class="h-12 transition duration-300 cursor-pointer text-[#0035c6] hover:scale-110 next-btn">
                     <g fill="none" stroke="currentColor" stroke-width="1">
                         <circle cx="12" cy="12" r="10" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8m0 0l-3-3m3 3l-3 3" />
@@ -73,7 +77,7 @@
     </div>
 </div>
 
-<!-- ✅ Initialize after DOM renders -->
+<!-- ✅ Initialize Swiper -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const doctorsSwiper = new Swiper('.doctors-swiper', {
@@ -92,10 +96,7 @@
             },
         });
 
-        const prevBtn = document.querySelector('.prev-btn');
-        const nextBtn = document.querySelector('.next-btn');
-
-        if (prevBtn) prevBtn.addEventListener('click', () => doctorsSwiper.slidePrev());
-        if (nextBtn) nextBtn.addEventListener('click', () => doctorsSwiper.slideNext());
+        document.querySelector('.prev-btn')?.addEventListener('click', () => doctorsSwiper.slidePrev());
+        document.querySelector('.next-btn')?.addEventListener('click', () => doctorsSwiper.slideNext());
     });
 </script>

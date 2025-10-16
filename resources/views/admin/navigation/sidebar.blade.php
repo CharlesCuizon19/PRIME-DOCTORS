@@ -169,6 +169,14 @@
                         Appointment
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.consultations.index') }}"
+                        class="block py-2 pl-4 pr-6  
+              {{ Route::is('admin.consultations.*') ? 'bg-white text-black' : 'text-white' }} 
+              hover:bg-gray-200 rounded-xl hover:text-black">
+                        Consultations
+                    </a>
+                </li>
             </div>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
