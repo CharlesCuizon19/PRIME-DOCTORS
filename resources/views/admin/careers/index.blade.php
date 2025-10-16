@@ -29,6 +29,7 @@
             <tr class="bg-black text-white text-sm font-semibold">
                 <th class="px-10 py-3 rounded-tl-lg text-center w-16">ID</th>
                 <th class="px-10 py-3 w-1/4 text-center">Career Name</th>
+                <th class="px-10 py-3 w-1/4 text-center">Overview</th>
                 <th class="px-10 py-3 w-1/4 text-center">Job Type</th>
                 <th class="px-10 py-3 w-1/4 text-center">Experience</th>
                 <th class="px-10 py-3 w-1/4 text-center">Vacancy</th>
@@ -44,6 +45,7 @@
             <tr class="border-t">
                 <td class="px-10 py-3 text-center">{{ $career->id }}</td>
                 <td class="px-10 py-3 text-center">{{ $career->career_name }}</td>
+                <td class="px-10 py-3 text-center">{!! $career->overview !!}</td>
                 <td class="px-10 py-3 text-center">{{ $career->job_type }}</td>
                 <td class="px-10 py-3 text-center">{{ $career->experience ?? '-' }}</td>
                 <td class="px-10 py-3 text-center">{{ $career->vacancy ?? '-' }}</td>
@@ -75,9 +77,9 @@
                 {{-- Career Image --}}
                 <td class="px-6 py-3 text-center">
                     @if ($career->image && $career->image->file && $career->image->file->image_path)
-                    <img src="{{ asset('storage/' . $career->image->file->image_path) }}"
-                        alt="{{ $career->image->alt_text ?? 'Banner' }}"
-                        class="mx-auto w-24 h-12 object-cover rounded shadow">
+                    <img src="{{ asset('storage/careers/' . basename(optional($career->image)?->file?->image_path ?? '')) }}"
+                        alt="{{ $career->title }} Image"
+                        class="h-12 w-20 object-cover rounded shadow mx-auto">
                     @else
                     <span class="text-gray-400 italic">No Image</span>
                     @endif

@@ -31,7 +31,7 @@ class ServicesController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'why_it_matters' => 'nullable|string',
+            'why_it_matters' => 'nullable|string|max:6000',
             'service_image' => 'nullable|image|max:2048',
             'icon_image' => 'nullable|image|max:2048',
             'benefits' => 'nullable|array',

@@ -53,6 +53,7 @@
                 <textarea name="why_it_matters" id="why_it_matters" rows="3"
                     class="block w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#FBD55B] focus:border-[#FBD55B]"
                     placeholder="Explain why this service is important">{{ old('why_it_matters') }}</textarea>
+
                 @error('why_it_matters')
                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                 @enderror
@@ -162,6 +163,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         // ✅ CKEditor
         ClassicEditor.create(document.querySelector('#description')).catch(console.error);
+        ClassicEditor.create(document.querySelector('#why_it_matters')).catch(console.error);
 
         // ✅ Benefits container (add/remove)
         const benefitsContainer = document.getElementById('benefits-container');

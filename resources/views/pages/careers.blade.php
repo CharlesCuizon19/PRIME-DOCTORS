@@ -32,9 +32,9 @@ $chunkedCareers = collect($careers)->chunk(9); // Group careers into sets of 9
                                         <!-- Career Image -->
                                         <div class="overflow-hidden relative">
                                             @if ($career->image && $career->image->file && $career->image->file->image_path)
-                                            <img src="{{ asset('storage/' . $career->image->file->image_path) }}"
-                                                alt="{{ $career->image->alt_text ?? $career->career_name }}"
-                                                class="object-cover w-full transition duration-300 lg:h-48 group-hover:scale-105">
+                                            <img src="{{ asset(optional($career->image->file)->image_path ?? 'storage/career/default-service.jpg') }}"
+                                                alt="{{ $career->image->alt_text ?? $service->title }}"
+                                                class="object-cover w-full h-56 transition duration-300">
                                             @else
                                             <img src="{{ asset('assets/default-career.jpg') }}"
                                                 alt="Default Career Image"
@@ -44,7 +44,7 @@ $chunkedCareers = collect($careers)->chunk(9); // Group careers into sets of 9
                                             <!-- Overlay badge for job type -->
                                             <span
                                                 class="absolute top-3 right-3 px-3 py-1 text-xs font-medium rounded-full shadow-sm
-                        {{ $career->job_type === 'Part-time' ? 'bg-yellow-400 text-gray-800' : 'bg-blue-600 text-white' }}">
+                                                    {{ $career->job_type === 'Part-time' ? 'bg-yellow-400 text-gray-800' : 'bg-blue-600 text-white' }}">
                                                 {{ $career->job_type }}
                                             </span>
                                         </div>
