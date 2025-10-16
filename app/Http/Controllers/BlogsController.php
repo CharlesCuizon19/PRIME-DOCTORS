@@ -37,7 +37,7 @@ class BlogsController extends Controller
             'context'       => 'required|string',
             'blog_date'     => 'required|date',
             'category_name' => 'required|string|max:255',
-            'blog_image_id'    => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
+            'blog_image_id'    => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $category = BlogCategories::firstOrCreate(['category_name' => $request->category_name]);

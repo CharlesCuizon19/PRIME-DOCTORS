@@ -15,12 +15,13 @@
         </div>
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             @foreach ($news as $item)
-            <div class="overflow-hidden transition duration-300 cursor-pointer hover:scale-105" data-aos="zoom-in"
-                data-aos-duration="1000">
+            <a href="{{ route('news-and-events.singlepage', ['id' => $item->id]) }}"
+                class="overflow-hidden transition duration-300 cursor-pointer hover:scale-105"
+                data-aos="zoom-in" data-aos-duration="1000">
                 <img src="{{ asset($item->image && $item->image->file ? $item->image->file->image_path : 'assets/news-img1.png') }}"
                     alt="{{ $item->title }}"
                     class="object-cover w-full h-[70%] rounded-2xl hover:scale-105 transition duration-300">
-                <div class="py-4">
+                <div class="py-4 text-left">
                     <p class="flex items-center justify-start gap-2 mb-2 text-sm text-[#edb42f]">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                             <path fill="currentColor"
@@ -31,13 +32,12 @@
                         </svg>
                         <span>{{ \Carbon\Carbon::parse($item->blog_date)->format('F d, Y') }}</span>
                     </p>
-                    <h2 class="text-base font-semibold text-gray-800 lg:text-lg text-start line-clamp-2">
+                    <h2 class="text-base font-semibold text-gray-800 lg:text-lg line-clamp-2">
                         {{ $item->title }}
                     </h2>
                 </div>
-            </div>
+            </a>
             @endforeach
         </div>
     </div>
-    </>
 </div>
